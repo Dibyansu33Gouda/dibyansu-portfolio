@@ -78,6 +78,17 @@ body {
   to   { background-position: 6% 4%, 94% 8%; }
 }
 
+/* ---------- live GitHub activity graph ---------- */
+.gh-graph-wrap {
+  border: 1px solid var(--border-bright); border-radius: var(--radius);
+  overflow: hidden; background: var(--bg-panel);
+}
+.gh-graph { display: block; width: 100%; height: auto; }
+.gh-graph-light { display: none; }
+[data-theme="light"] .gh-graph-dark { display: none; }
+[data-theme="light"] .gh-graph-light { display: block; }
+.gh-graph-fallback { font-family: var(--font-mono); font-size: 12px; color: var(--text-faint); margin-top: 8px; }
+
 /* ---------- interactive terminal widget ---------- */
 .terminal-widget {
   border: 1px solid var(--border-bright); border-radius: var(--radius);
