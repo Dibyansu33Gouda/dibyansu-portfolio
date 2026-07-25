@@ -41,110 +41,71 @@
 </div>
 
 <div class="wrap">
-
   <section class="page-section" style="border-bottom:1px solid var(--border);">
     <div class="sec-head"><span class="cmd">$ ls -la</span><h2>certifications/</h2></div>
     <p class="sec-lede">Credentials from self-directed learning alongside coursework — listed here as records, not as a substitute for the projects.</p>
 
-    <div class="card">
-      <div class="card-head">
-        <span class="card-name">cisco-python-essentials-1.cert</span>
-        <span class="pill pill-done">issued</span>
-      </div>
-      <div class="card-body">
-        <p class="card-desc">Cisco Networking Academy — Python fundamentals: syntax, control flow, functions, and basic data structures.</p>
-        <div class="card-links"><a href="https://drive.google.com/file/d/1q01Bmlp0sv_o2YUEU4ch7mmahJBC1iTm/view?usp=drive_link" target="_blank" rel="noopener">view credential ↗</a></div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-head">
-        <span class="card-name">cisco-python-essentials-2.cert</span>
-        <span class="pill pill-done">issued</span>
-      </div>
-      <div class="card-body">
-        <p class="card-desc">Cisco Networking Academy — file handling, OOP, modules, and exception handling in Python.</p>
-        <div class="card-links"><a href="https://drive.google.com/file/d/1ahgZFwztcECmJibPESYQCISEDyCCgl7z/view?usp=drive_link" target="_blank" rel="noopener">view credential ↗</a></div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-head">
-        <span class="card-name">microsoft-genai-and-agents.cert</span>
-        <span class="pill pill-done">issued</span>
-      </div>
-      <div class="card-body">
-        <p class="card-desc">Microsoft — Introduction to Generative AI and agent-based systems.</p>
-        <div class="card-links"><a href="#" class="disabled">view credential — [ add link ]</a></div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-head">
-        <span class="card-name">ibm-ai-fundamentals.cert</span>
-        <span class="pill pill-done">issued</span>
-      </div>
-      <div class="card-body">
-        <p class="card-desc">IBM SkillsBuild — AI fundamentals: language and vision basics, model concepts, and responsible AI.</p>
-        <div class="card-links"><a href="https://drive.google.com/file/d/178dIZHPSjkI7IpA6RRa3bLL9steYRFYt/view?usp=sharing" target="_blank" rel="noopener">view credential ↗</a></div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-head">
-        <span class="card-name">kaggle-pandas.cert</span>
-        <span class="pill pill-done">issued</span>
-      </div>
-      <div class="card-body">
-        <p class="card-desc">Kaggle — Pandas course: indexing, grouping, and data cleaning.</p>
-        <div class="card-links"><a href="https://drive.google.com/file/d/1bF5lsMB_dQdFXJo14rumDSMmj05Tme_q/view?usp=drive_link" target="_blank" rel="noopener">view credential ↗</a></div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-head">
-        <span class="card-name">hp-life-ai-for-beginners.cert</span>
-        <span class="pill pill-done">issued</span>
-      </div>
-      <div class="card-body">
-        <p class="card-desc">HP LIFE — AI for Beginners: core AI concepts and use cases for non-specialists.</p>
-        <div class="card-links"><a href="https://drive.google.com/file/d/1PeryaW4DCuih_gPj_GFmKHn4z_RnVRk1/view?usp=drive_link" target="_blank" rel="noopener">view credential ↗</a></div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-head">
-        <span class="card-name">vibe2ship-hackathon.cert</span>
-        <span class="pill pill-progress">hackathon</span>
-      </div>
-      <div class="card-body">
-        <p class="card-desc">VIBE2SHIP Hackathon — Coding Ninjas, sponsored by Google for Developers.</p>
-        <div class="card-links"><a href="https://drive.google.com/file/d/1YDI5suFNF_C5YIcOrIh5ZBgFK8uqKoMC/view?usp=sharing" target="_blank" rel="noopener">view credential ↗</a></div>
-      </div>
-    </div>
-
+    <!-- To add a certification: add one object to the CERTS array below. -->
+    <div id="cards-root"></div>
   </section>
-
 </div>
 
-<footer data-footer-date>
-  <div class="footer-content">
-    <span>built by dibyansu — last commit {{DATE}}</span>
-    <div class="social-links">
-      <a href="https://github.com/Dibyansu33Gouda" target="_blank" rel="noopener" aria-label="GitHub" class="social-icon">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-          <path d="M12 .5C5.73.5.75 5.48.75 11.75c0 5.02 3.25 9.27 7.77 10.77.57.1.78-.25.78-.55 0-.27-.01-1.16-.02-2.11-3.16.69-3.83-1.34-3.83-1.34-.52-1.31-1.26-1.66-1.26-1.66-1.03-.7.08-.69.08-.69 1.14.08 1.74 1.17 1.74 1.17 1.01 1.73 2.65 1.23 3.3.94.1-.73.4-1.23.72-1.51-2.52-.29-5.17-1.26-5.17-5.61 0-1.24.44-2.25 1.17-3.04-.12-.29-.51-1.45.11-3.02 0 0 .96-.31 3.14 1.16a10.9 10.9 0 0 1 5.72 0c2.18-1.47 3.14-1.16 3.14-1.16.62 1.57.23 2.73.11 3.02.73.79 1.17 1.8 1.17 3.04 0 4.36-2.65 5.32-5.18 5.6.41.35.77 1.04.77 2.1 0 1.52-.01 2.74-.01 3.11 0 .3.2.66.79.55A11.26 11.26 0 0 0 23.25 11.75C23.25 5.48 18.27.5 12 .5Z"/>
-        </svg>
-      </a>
-      <a href="https://www.linkedin.com/in/dibyansu-gouda-b5b432379/" target="_blank" rel="noopener" aria-label="LinkedIn" class="social-icon">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-          <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.86 0-2.14 1.45-2.14 2.94v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45Z"/>
-        </svg>
-      </a>
-    </div>
-  </div>
-</footer>
+<footer data-footer-date>built by dibyansu — last commit {{DATE}}</footer>
 
 <script src="script.js"></script>
+<script>
+  var CERTS = [
+    {
+      name: "cisco-python-essentials-1.cert",
+      status: "issued",
+      pillClass: "pill-done",
+      desc: "Cisco Networking Academy — Python fundamentals: syntax, control flow, functions, and basic data structures.",
+      href: "https://drive.google.com/file/d/1q01Bmlp0sv_o2YUEU4ch7mmahJBC1iTm/view?usp=drive_link"
+    },
+    {
+      name: "cisco-python-essentials-2.cert",
+      status: "issued",
+      pillClass: "pill-done",
+      desc: "Cisco Networking Academy — file handling, OOP, modules, and exception handling in Python.",
+      href: "https://drive.google.com/file/d/1ahgZFwztcECmJibPESYQCISEDyCCgl7z/view?usp=drive_link"
+    },
+    {
+      name: "microsoft-genai-and-agents.cert",
+      status: "issued",
+      pillClass: "pill-done",
+      desc: "Microsoft — Introduction to Generative AI and agent-based systems.",
+      href: null
+    },
+    {
+      name: "ibm-ai-fundamentals.cert",
+      status: "issued",
+      pillClass: "pill-done",
+      desc: "IBM SkillsBuild — AI fundamentals: language and vision basics, model concepts, and responsible AI.",
+      href: "https://drive.google.com/file/d/178dIZHPSjkI7IpA6RRa3bLL9steYRFYt/view?usp=sharing"
+    },
+    {
+      name: "kaggle-pandas.cert",
+      status: "issued",
+      pillClass: "pill-done",
+      desc: "Kaggle — Pandas course: indexing, grouping, and data cleaning.",
+      href: "https://drive.google.com/file/d/1bF5lsMB_dQdFXJo14rumDSMmj05Tme_q/view?usp=drive_link"
+    },
+    {
+      name: "hp-life-ai-for-beginners.cert",
+      status: "issued",
+      pillClass: "pill-done",
+      desc: "HP LIFE — AI for Beginners: core AI concepts and use cases for non-specialists.",
+      href: "https://drive.google.com/file/d/1PeryaW4DCuih_gPj_GFmKHn4z_RnVRk1/view?usp=drive_link"
+    },
+    {
+      name: "vibe2ship-hackathon.cert",
+      status: "hackathon",
+      pillClass: "pill-progress",
+      desc: "VIBE2SHIP Hackathon — Coding Ninjas, sponsored by Google for Developers.",
+      href: "https://drive.google.com/file/d/1YDI5suFNF_C5YIcOrIh5ZBgFK8uqKoMC/view?usp=sharing"
+    }
+  ];
+  renderCerts(CERTS);
+</script>
 </body>
 </html>

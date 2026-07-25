@@ -1,3 +1,6 @@
+/* Add these two lines right before the stylesheet <link> in every page's <head> for faster font loading:
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> */
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap');
 
 /* ============================================================
@@ -61,13 +64,24 @@ body {
   background-image:
     radial-gradient(ellipse 900px 500px at 15% -10%, color-mix(in srgb, var(--accent) 6%, transparent), transparent),
     radial-gradient(ellipse 700px 500px at 90% 15%, color-mix(in srgb, var(--accent-2) 5%, transparent), transparent);
+  background-repeat: no-repeat;
   color: var(--text);
   font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.65;
   min-height: 100vh;
   transition: background-color .25s ease, color .25s ease;
+  animation: bg-drift 26s ease-in-out infinite alternate;
 }
+@keyframes bg-drift {
+  from { background-position: 0% 0%, 100% 0%; }
+  to   { background-position: 6% 4%, 94% 8%; }
+}
+
+/* ---------- reveal-on-scroll ---------- */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity .55s ease, transform .55s ease; }
+.reveal.revealed { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
 
 a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
@@ -151,19 +165,6 @@ a:hover { text-decoration: underline; }
 .btn-primary { background: var(--accent); border-color: var(--accent); color: var(--bg); font-weight: 600; }
 .btn-primary:hover { color: var(--bg); opacity: .88; border-color: var(--accent); }
 
-.social-links { display: flex; gap: 12px; margin-top: 18px; }
-.social-icon {
-  width: 38px; height: 38px;
-  display: flex; align-items: center; justify-content: center;
-  border: 1px solid var(--border-bright); border-radius: var(--radius);
-  color: var(--text-dim); background: var(--bg-panel);
-  transition: color .15s ease, border-color .15s ease, transform .15s ease;
-}
-.social-icon:hover {
-  color: var(--accent); border-color: var(--accent);
-  text-decoration: none; transform: translateY(-2px);
-}
-
 /* ---------- section shell ---------- */
 section { padding: 56px 0; border-bottom: 1px solid var(--border); }
 section:last-of-type { border-bottom: none; }
@@ -194,9 +195,14 @@ section:last-of-type { border-bottom: none; }
 /* ---------- project / cert cards (text-first, no thumbnails) ---------- */
 .card {
   border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-panel);
-  margin-bottom: 18px; overflow: hidden; transition: border-color .2s ease;
+  margin-bottom: 18px; overflow: hidden;
+  transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease;
 }
-.card:hover { border-color: var(--border-bright); }
+.card:hover {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+  box-shadow: 0 14px 32px -18px color-mix(in srgb, var(--accent) 55%, transparent);
+}
 
 .card-head {
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
@@ -258,31 +264,10 @@ footer {
   font-family: var(--font-mono);
   font-size: 12px;
   color: var(--text-faint);
+  text-align: center;
 }
-.footer-content {
-  max-width: 860px;
-  margin: 0 auto;
-  padding: 0 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 24px;
-  flex-wrap: wrap;
-}
-.footer-content span { white-space: nowrap; }
-footer .social-links {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 0;
-}
-footer .social-icon {
-  flex: 0 0 38px;
-  color: var(--accent);
-  border-color: var(--accent-dim);
-}
-footer .social-icon svg { display: block; }
 [data-theme="light"] footer { background: #EFE9DC; border-top-color: var(--accent-dim); }
+
 @media (max-width: 680px) {
   .termnav { position: fixed; inset: 49px 0 auto 0; background: var(--bg); border-bottom: 1px solid var(--border);
     flex-direction: column; gap: 0; padding: 8px 24px; display: none; }
