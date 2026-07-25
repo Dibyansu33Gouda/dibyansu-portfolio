@@ -73,9 +73,9 @@
   tick();
 })();
 
-// ---------- reveal-on-scroll ----------
+// ---------- reveal-on-scroll (fades in AND back out as you scroll past) ----------
 function observeReveals() {
-  var els = document.querySelectorAll('.reveal:not(.revealed)');
+  var els = document.querySelectorAll('.reveal');
   if (!els.length) return;
   if (!('IntersectionObserver' in window)) {
     els.forEach(function (e) { e.classList.add('revealed'); });
@@ -85,7 +85,8 @@ function observeReveals() {
     entries.forEach(function (entry) {
       if (entry.isIntersecting) {
         entry.target.classList.add('revealed');
-        io.unobserve(entry.target);
+      } else {
+        entry.target.classList.remove('revealed');
       }
     });
   }, { threshold: 0.12 });
@@ -99,7 +100,7 @@ function renderProjects(items) {
   var root = document.getElementById('cards-root');
   if (!root || !items) return;
   var pillClass = { live: 'pill-live', progress: 'pill-progress', complete: 'pill-done' };
-  root.innerHTML = items.map(function (p) {
+  root.innerHTML = items.map(function (p, i) {
     var log = '';
     if (p.log && p.log.length) {
       log = '<div class="card-log">' + p.log.map(function (l) {
@@ -116,7 +117,7 @@ function renderProjects(items) {
       ? '<a href="' + p.source + '" target="_blank" rel="noopener">source \u2197</a>'
       : '<a href="#" class="disabled">source \u2014 [ add repo link ]</a>';
     if (p.demo) links += '<a href="' + p.demo + '" target="_blank" rel="noopener">live demo \u2197</a>';
-    return '<div class="card reveal">' +
+    return '<div class="card reveal" style="transition-delay:' + Math.min(i * 60, 300) + 'ms">' +
       '<div class="card-head"><span class="card-name">' + p.name + '/</span>' +
       '<span class="pill ' + (pillClass[p.status] || 'pill-done') + '">' + p.status + '</span></div>' +
       '<div class="card-body"><p class="card-desc">' + p.desc + '</p>' + log +
@@ -130,11 +131,11 @@ function renderProjects(items) {
 function renderCerts(items) {
   var root = document.getElementById('cards-root');
   if (!root || !items) return;
-  root.innerHTML = items.map(function (c) {
+  root.innerHTML = items.map(function (c, i) {
     var link = c.href
       ? '<a href="' + c.href + '" target="_blank" rel="noopener">view credential \u2197</a>'
       : '<a href="#" class="disabled">view credential \u2014 [ add link ]</a>';
-    return '<div class="card reveal">' +
+    return '<div class="card reveal" style="transition-delay:' + Math.min(i * 60, 300) + 'ms">' +
       '<div class="card-head"><span class="card-name">' + c.name + '</span>' +
       '<span class="pill ' + (c.pillClass || 'pill-done') + '">' + c.status + '</span></div>' +
       '<div class="card-body"><p class="card-desc">' + c.desc + '</p>' +

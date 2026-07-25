@@ -235,6 +235,7 @@ section:last-of-type { border-bottom: none; }
 
 /* ---------- project / cert cards (text-first, no thumbnails) ---------- */
 .card {
+  position: relative; z-index: 1;
   border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-panel);
   margin-bottom: 18px; overflow: hidden;
   transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease;
@@ -244,6 +245,18 @@ section:last-of-type { border-bottom: none; }
   transform: translateY(-4px);
   box-shadow: 0 14px 32px -18px color-mix(in srgb, var(--accent) 55%, transparent);
 }
+.card::before,
+.terminal-widget::before,
+.contact-box::before,
+.gh-graph-wrap::before {
+  content: "";
+  position: absolute; inset: -1px; z-index: -1; border-radius: inherit;
+  background: radial-gradient(140% 160% at 0% 0%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 55%),
+              radial-gradient(120% 140% at 100% 100%, color-mix(in srgb, var(--accent-2) 12%, transparent), transparent 55%);
+  opacity: .5; transition: opacity .3s ease;
+}
+.card:hover::before { opacity: 1; }
+.terminal-widget, .contact-box, .gh-graph-wrap { position: relative; z-index: 1; }
 
 .card-head {
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
@@ -279,7 +292,7 @@ section:last-of-type { border-bottom: none; }
 .skill-list .bar { font-family: var(--font-mono); color: var(--text-faint); font-size: 12px; white-space: nowrap; }
 
 /* ---------- contact ---------- */
-.contact-box { border: 1px solid var(--border-bright); border-radius: var(--radius); background: var(--bg-panel); padding: 24px; }
+.contact-box { border: 1px solid var(--border-bright); border-radius: var(--radius); background: var(--bg-panel); padding: 24px; overflow: hidden; }
 .contact-box p { color: var(--text-dim); font-size: 15px; margin-bottom: 18px; max-width: 480px; }
 .contact-rows { font-family: var(--font-mono); font-size: 14px; }
 .contact-row { display: flex; gap: 12px; padding: 7px 0; color: var(--text-dim); flex-wrap: wrap; }
