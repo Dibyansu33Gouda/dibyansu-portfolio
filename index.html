@@ -73,7 +73,23 @@
     </div>
   </section>
 
-  <section id="about" class="page-section">
+  <section class="page-section" style="border-bottom:1px solid var(--border); padding-top:0; padding-bottom:32px;">
+    <div class="terminal-widget reveal">
+      <div class="tw-head">
+        <span class="tw-dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></span>
+        <span class="tw-title">try it — type 'help'</span>
+      </div>
+      <div class="tw-body" id="twBody" aria-live="polite">
+        <div class="tw-line tw-out">Welcome. Type <span class="tw-cmd">help</span> to see what this does.</div>
+      </div>
+      <div class="tw-inputline">
+        <span class="tw-prompt">dibyansu@portfolio:~$</span>
+        <input type="text" id="twInput" class="tw-input" autocomplete="off" spellcheck="false" aria-label="terminal command input" placeholder="type a command...">
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="page-section reveal">
     <div class="sec-head"><span class="cmd">$ cat</span><h2>about.md</h2></div>
     <div class="about-body">
       <p>
@@ -99,23 +115,7 @@
 
 </div>
 
-<footer data-footer-date>
-  <div class="footer-content">
-    <span>built by dibyansu — last commit {{DATE}}</span>
-    <div class="social-links">
-      <a href="https://github.com/Dibyansu33Gouda" target="_blank" rel="noopener" aria-label="GitHub" class="social-icon">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-          <path d="M12 .5C5.73.5.75 5.48.75 11.75c0 5.02 3.25 9.27 7.77 10.77.57.1.78-.25.78-.55 0-.27-.01-1.16-.02-2.11-3.16.69-3.83-1.34-3.83-1.34-.52-1.31-1.26-1.66-1.26-1.66-1.03-.7.08-.69.08-.69 1.14.08 1.74 1.17 1.74 1.17 1.01 1.73 2.65 1.23 3.3.94.1-.73.4-1.23.72-1.51-2.52-.29-5.17-1.26-5.17-5.61 0-1.24.44-2.25 1.17-3.04-.12-.29-.51-1.45.11-3.02 0 0 .96-.31 3.14 1.16a10.9 10.9 0 0 1 5.72 0c2.18-1.47 3.14-1.16 3.14-1.16.62 1.57.23 2.73.11 3.02.73.79 1.17 1.8 1.17 3.04 0 4.36-2.65 5.32-5.18 5.6.41.35.77 1.04.77 2.1 0 1.52-.01 2.74-.01 3.11 0 .3.2.66.79.55A11.26 11.26 0 0 0 23.25 11.75C23.25 5.48 18.27.5 12 .5Z"/>
-        </svg>
-      </a>
-      <a href="https://www.linkedin.com/in/dibyansu-gouda-b5b432379/" target="_blank" rel="noopener" aria-label="LinkedIn" class="social-icon">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-          <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.86 0-2.14 1.45-2.14 2.94v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45Z"/>
-        </svg>
-      </a>
-    </div>
-  </div>
-</footer>
+<footer data-footer-date>built by dibyansu — last commit {{DATE}}</footer>
 
 <script src="script.js"></script>
 </body>

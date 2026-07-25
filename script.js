@@ -142,8 +142,81 @@ function renderCerts(items) {
   }).join('');
   observeReveals();
 }
+// ---------- functional terminal widget (home page) ----------
+(function () {
+  var input = document.getElementById('twInput');
+  var body = document.getElementById('twBody');
+  if (!input || !body) return;
+
+  function print(html, cls) {
+    var div = document.createElement('div');
+    div.className = 'tw-line ' + (cls || 'tw-out');
+    div.innerHTML = html;
+    body.appendChild(div);
+    body.scrollTop = body.scrollHeight;
+  }
+
+  function go(url, label) {
+    print('opening ' + label + '...');
+    setTimeout(function () { location.href = url; }, 350);
+  }
+
+  var commands = {
+    help: function () {
+      print('available: whoami, about, projects, certifications, skills, contact, resume, github, linkedin, theme, date, clear');
+    },
+    whoami: function () {
+      print('B.Tech CSE student at NIST University, building in Python, AI, and full-stack web. Currently 3rd semester.');
+    },
+    about: function () {
+      var el = document.getElementById('about');
+      if (el) { print('scrolling to about...'); el.scrollIntoView({ behavior: 'smooth' }); }
+    },
+    projects: function () { go('projects.html', 'projects'); },
+    certifications: function () { go('certifications.html', 'certifications'); },
+    certs: function () { commands.certifications(); },
+    skills: function () { go('skills.html', 'skills'); },
+    contact: function () { go('contact.html', 'contact'); },
+    home: function () { print('already home.'); },
+    resume: function () {
+      print('opening resume...');
+      window.open('https://drive.google.com/file/d/1nmS7qcL4PreTP0PJkvtV2_1E-4wBlIZb/view?usp=drive_link', '_blank');
+    },
+    github: function () {
+      print('opening github...');
+      window.open('https://github.com/Dibyansu33Gouda', '_blank');
+    },
+    linkedin: function () {
+      print('opening linkedin...');
+      window.open('https://www.linkedin.com/in/dibyansu-gouda-b5b432379/', '_blank');
+    },
+    theme: function () {
+      if (typeof toggleTheme === 'function') toggleTheme();
+      print('theme switched.');
+    },
+    date: function () { print(new Date().toString()); },
+    clear: function () { body.innerHTML = ''; },
+    sudo: function () { print("Permission denied: you're not root here — nice try though."); }
+  };
+
+  input.addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter') return;
+    var raw = input.value.trim();
+    if (!raw) return;
+    print('<span class="tw-prompt-inline">$</span> ' + raw.replace(/</g, '&lt;'), 'tw-cmdline');
+    var cmd = raw.toLowerCase();
+    if (commands[cmd]) {
+      commands[cmd]();
+    } else {
+      print('command not found: ' + raw.replace(/</g, '&lt;') + " — type <span class='tw-cmd'>help</span> for a list", 'tw-err');
+    }
+    input.value = '';
+  });
+})();
+
 // ---------- footer last-updated date ----------
 (function () {
+  var f = document.querySelector('[data-footer-date]');
   if (!f) return;
   f.textContent = 'built by dibyansu — last updated ' +
     new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' });
