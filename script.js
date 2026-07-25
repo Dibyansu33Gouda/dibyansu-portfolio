@@ -228,6 +228,47 @@ function renderCerts(items) {
   });
 })();
 
+// ---------- cursor-tilt 3D effect on cards ----------
+(function () {
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (reduced || !canHover) return; // skip on touch devices and reduced-motion preference
+
+  var MAX_TILT = 8; // degrees
+  var attached = new WeakSet();
+
+  function attachTilt(card) {
+    if (attached.has(card)) return;
+    attached.add(card);
+    card.addEventListener('mousemove', function (e) {
+      var rect = card.getBoundingClientRect();
+      var px = (e.clientX - rect.left) / rect.width - 0.5;
+      var py = (e.clientY - rect.top) / rect.height - 0.5;
+      var rotateY = px * MAX_TILT * 2;
+      var rotateX = -py * MAX_TILT * 2;
+      card.style.transform = 'perspective(700px) rotateX(' + rotateX.toFixed(2) + 'deg) rotateY(' + rotateY.toFixed(2) + 'deg) translateY(-4px)';
+      card.style.setProperty('--glow-x', (50 + px * 60) + '%');
+      card.style.setProperty('--glow-y', (50 + py * 60) + '%');
+    });
+    card.addEventListener('mouseleave', function () {
+      card.style.transform = '';
+      card.style.removeProperty('--glow-x');
+      card.style.removeProperty('--glow-y');
+    });
+  }
+
+  function attachAll() {
+    document.querySelectorAll('.card').forEach(attachTilt);
+  }
+  attachAll();
+
+  // projects.html / certifications.html render cards after this script runs — watch for that
+  var root = document.getElementById('cards-root');
+  if (root) {
+    new MutationObserver(attachAll).observe(root, { childList: true });
+  }
+})();
+
 // ---------- footer last-updated date ----------
 (function () {
   var f = document.querySelector('[data-footer-date]');

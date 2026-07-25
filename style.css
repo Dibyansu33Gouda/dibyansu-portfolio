@@ -77,6 +77,10 @@ body {
   from { background-position: 0% 0%, 100% 0%; }
   to   { background-position: 6% 4%, 94% 8%; }
 }
+@media (hover: hover) and (pointer: fine) {
+  /* subtle depth: background stays put while content scrolls over it */
+  body { background-attachment: fixed, fixed; }
+}
 
 /* ---------- live GitHub activity graph ---------- */
 .gh-graph-wrap {
@@ -255,7 +259,7 @@ section:last-of-type { border-bottom: none; }
 .gh-graph-wrap::before {
   content: "";
   position: absolute; inset: -1px; z-index: -1; border-radius: inherit;
-  background: radial-gradient(140% 160% at 0% 0%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 55%),
+  background: radial-gradient(140% 160% at var(--glow-x, 0%) var(--glow-y, 0%), color-mix(in srgb, var(--accent) 16%, transparent), transparent 55%),
               radial-gradient(120% 140% at 100% 100%, color-mix(in srgb, var(--accent-2) 12%, transparent), transparent 55%);
   opacity: .5; transition: opacity .3s ease;
 }
