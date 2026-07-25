@@ -83,13 +83,16 @@ function observeReveals() {
   }
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
+      var el = entry.target;
       if (entry.isIntersecting) {
-        entry.target.classList.add('revealed');
+        el.style.transitionDelay = el.dataset.delay || '0ms';
+        el.classList.add('revealed');
       } else {
-        entry.target.classList.remove('revealed');
+        el.style.transitionDelay = '0ms'; // no stagger on the way out — exits should feel instant
+        el.classList.remove('revealed');
       }
     });
-  }, { threshold: 0.12 });
+  }, { threshold: 0.12, rootMargin: '-30px 0px -30px 0px' });
   els.forEach(function (e) { io.observe(e); });
 }
 document.addEventListener('DOMContentLoaded', observeReveals);
@@ -117,7 +120,7 @@ function renderProjects(items) {
       ? '<a href="' + p.source + '" target="_blank" rel="noopener">source \u2197</a>'
       : '<a href="#" class="disabled">source \u2014 [ add repo link ]</a>';
     if (p.demo) links += '<a href="' + p.demo + '" target="_blank" rel="noopener">live demo \u2197</a>';
-    return '<div class="card reveal" style="transition-delay:' + Math.min(i * 60, 300) + 'ms">' +
+    return '<div class="card reveal" data-delay="' + Math.min(i * 60, 300) + 'ms">' +
       '<div class="card-head"><span class="card-name">' + p.name + '/</span>' +
       '<span class="pill ' + (pillClass[p.status] || 'pill-done') + '">' + p.status + '</span></div>' +
       '<div class="card-body"><p class="card-desc">' + p.desc + '</p>' + log +
@@ -128,6 +131,12 @@ function renderProjects(items) {
 }
 
 // ---------- data-driven certification cards ----------
+function driveThumb(href, size) {
+  if (!href) return null;
+  var m = href.match(/\/d\/([a-zA-Z0-9_-]+)/);
+  if (!m) return null;
+  return 'https://drive.google.com/thumbnail?id=' + m[1] + '&sz=w' + (size || 800);
+}
 function renderCerts(items) {
   var root = document.getElementById('cards-root');
   if (!root || !items) return;
@@ -135,7 +144,11 @@ function renderCerts(items) {
     var link = c.href
       ? '<a href="' + c.href + '" target="_blank" rel="noopener">view credential \u2197</a>'
       : '<a href="#" class="disabled">view credential \u2014 [ add link ]</a>';
-    return '<div class="card reveal" style="transition-delay:' + Math.min(i * 60, 300) + 'ms">' +
+    var thumbUrl = driveThumb(c.href, 800);
+    var thumb = thumbUrl
+      ? '<div class="cert-thumb"><img src="' + thumbUrl + '" alt="' + c.name + ' — first page preview" loading="lazy" onerror="this.closest(\'.cert-thumb\').remove()"></div>'
+      : '';
+    return '<div class="card reveal" data-delay="' + Math.min(i * 60, 300) + 'ms">' + thumb +
       '<div class="card-head"><span class="card-name">' + c.name + '</span>' +
       '<span class="pill ' + (c.pillClass || 'pill-done') + '">' + c.status + '</span></div>' +
       '<div class="card-body"><p class="card-desc">' + c.desc + '</p>' +
