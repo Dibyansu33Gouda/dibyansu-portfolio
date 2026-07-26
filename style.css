@@ -276,6 +276,11 @@ section:last-of-type { border-bottom: none; }
 .status-line { font-family: var(--font-mono); font-size: 13px; color: var(--text-faint); margin-top: 22px; }
 .status-line .k { color: var(--accent-2); }
 
+.stat-readout { display: flex; flex-wrap: wrap; gap: 32px; margin-top: 24px; font-family: var(--font-mono); }
+.stat-item { display: flex; flex-direction: column; }
+.stat-num { font-size: 1.7rem; font-weight: 800; color: var(--accent); line-height: 1; font-variant-numeric: tabular-nums; }
+.stat-label { font-size: 11px; color: var(--text-faint); letter-spacing: .08em; text-transform: uppercase; margin-top: 4px; }
+
 /* ---------- project / cert cards (text-first, no thumbnails) ---------- */
 .card {
   position: relative; z-index: 1;

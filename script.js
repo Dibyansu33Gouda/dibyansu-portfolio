@@ -284,7 +284,6 @@ function renderCerts(items) {
     var key = e.key.toLowerCase();
     buffer.push(key);
     if (buffer.length > seq.length) buffer.shift();
-    console.log('konami buffer:', buffer.join(' ')); // TEMP debug — remove once confirmed working
     if (buffer.length === seq.length && buffer.every(function (k, i) { return k === seq[i]; })) {
       triggerKonami();
       buffer = [];
@@ -323,6 +322,44 @@ function renderCerts(items) {
       setTimeout(function () { toast.remove(); }, 400);
     }, 4200);
   }
+})();
+
+// ---------- counted-up hero stats (one-shot, not tied to bidirectional reveal) ----------
+(function () {
+  var root = document.getElementById('statReadout');
+  if (!root) return;
+  var nums = root.querySelectorAll('.stat-num');
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function setFinal() {
+    nums.forEach(function (el) { el.textContent = String(el.dataset.target).padStart(2, '0'); });
+  }
+
+  if (reduced || !('IntersectionObserver' in window)) { setFinal(); return; }
+
+  function animateCount(el) {
+    var target = parseInt(el.dataset.target, 10) || 0;
+    var duration = 900;
+    var start = null;
+    function step(ts) {
+      if (!start) start = ts;
+      var progress = Math.min((ts - start) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = String(Math.round(eased * target)).padStart(2, '0');
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        nums.forEach(animateCount);
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  io.observe(root);
 })();
 
 // ---------- footer last-updated date ----------
