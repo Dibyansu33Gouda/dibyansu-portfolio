@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank you — Dibyansu Gouda</title>
+  <meta name="description" content="Thanks for reaching out — I'll reply soon.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <style>
+    .contact-box{max-width:720px;margin:2.5rem auto;text-align:center}
+    .contact-box h1{font-size:1.6rem;margin-bottom:0.5rem}
+    .contact-box p{color:var(--text);margin:0.4rem 0}
+    .contact-box .btn{display:inline-block}
+  </style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+
+<div class="termbar">
+  <div class="termbar-inner">
+    <div class="termbar-left">
+      <div class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+      <span class="termbar-title">dibyansu@portfolio:~/thanks</span>
+    </div>
+    <div class="termbar-right">
+      <nav class="termnav" id="termnav" aria-label="Primary">
+        <a href="index.html"><span class="idx">01</span> home</a>
+        <a href="projects.html"><span class="idx">02</span> projects</a>
+        <a href="certifications.html"><span class="idx">03</span> certifications</a>
+        <a href="skills.html"><span class="idx">04</span> skills</a>
+        <a href="contact.html"><span class="idx">05</span> contact</a>
+      </nav>
+      <button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()">[ dark ]</button>
+      <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="termnav">☰</button>
+    </div>
+  </div>
+</div>
+
+<main id="main" class="wrap">
+  <section class="page-section">
+    <div class="sec-head"><span class="cmd">$ echo</span><h2>thank-you.txt</h2></div>
+    <div class="contact-box reveal">
+      <h1>Thanks — your message has been sent.</h1>
+      <p>I appreciate you reaching out. I’ll get back to you soon.</p>
+      <p id="countdown" style="margin-top:1rem; color:var(--text-faint);">Redirecting in <strong id="count">6</strong>s…</p>
+      <p style="margin-top:0.6rem;"><a class="btn" href="index.html">back to home →</a>
+      <a style="margin-left:1rem;" class="btn" href="contact.html">send another message →</a></p>
+    </div>
+  </section>
+</main>
+
+<footer data-footer-date>built by dibyansu — last commit {{DATE}}</footer>
+
+<script src="script.js"></script>
+<script>
+  (function(){
+    var secs = 6;
+    var el = document.getElementById('count');
+    var countdownEl = document.getElementById('countdown');
+    if (!el) return;
+    var iv = setInterval(function(){
+      secs -= 1;
+      if (secs <= 0) {
+        clearInterval(iv);
+        if (countdownEl) countdownEl.textContent = 'Redirecting…';
+        window.location.href = 'index.html';
+        return;
+      }
+      el.textContent = secs;
+    }, 1000);
+  })();
+</script>
+</body>
+</html>

@@ -54,7 +54,9 @@
         <div class="contact-row"><span class="k">linkedin</span><a class="v" href="https://linkedin.com/in/dibyansu-gouda" target="_blank" rel="noopener">in/dibyansu-gouda</a></div>
       </div>
 
-      <form class="contact-form" action="#" method="POST" onsubmit="return false;">
+      <form class="contact-form" action="https://formspree.io/f/xqerqpao" method="POST">
+        <input type="hidden" name="_next" value="thankyou.html">
+        <input type="hidden" name="_replyto" id="_replyto" value="">
         <div class="form-row-2">
           <div>
             <label for="name">name</label>
@@ -77,9 +79,12 @@
           <button type="submit" class="btn btn-primary">send message →</button>
         </div>
         <p style="font-family:var(--font-mono); font-size:11px; color:var(--text-faint);">
-          // note: wire this to a form backend (Formspree, Web3Forms, or a small serverless endpoint) before going live — a static page can't send email on its own.
         </p>
       </form>
+      <div id="contact-success" class="contact-success" style="display:none; margin-top:1rem; font-family:var(--font-sans);">
+        <h3>Thanks — your message was sent.</h3>
+        <p>I’ll get back to you soon.</p>
+      </div>
     </div>
   </section>
 
@@ -88,5 +93,24 @@
 <footer data-footer-date>built by dibyansu — last commit {{DATE}}</footer>
 
 <script src="script.js"></script>
+<script>
+(function(){
+  var form = document.querySelector('.contact-form');
+  if (!form) return;
+  var reply = document.getElementById('_replyto');
+  var emailInput = form.querySelector('input[name="email"]');
+  form.addEventListener('submit', function(){
+    if (reply && emailInput) reply.value = emailInput.value || '';
+  });
+
+  if (location.search.indexOf('success=true') !== -1) {
+    var success = document.getElementById('contact-success');
+    if (success) {
+      form.style.display = 'none';
+      success.style.display = 'block';
+    }
+  }
+})();
+</script>
 </body>
 </html>
