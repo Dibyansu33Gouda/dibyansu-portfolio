@@ -280,6 +280,7 @@ function renderCerts(items) {
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   document.addEventListener('keydown', function (e) {
+    if (e.repeat) return; // ignore held-key auto-repeat, only count distinct presses
     var key = e.key.toLowerCase();
     buffer.push(key);
     if (buffer.length > seq.length) buffer.shift();
