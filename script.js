@@ -284,6 +284,7 @@ function renderCerts(items) {
     var key = e.key.toLowerCase();
     buffer.push(key);
     if (buffer.length > seq.length) buffer.shift();
+    console.log('konami buffer:', buffer.join(' ')); // TEMP debug — remove once confirmed working
     if (buffer.length === seq.length && buffer.every(function (k, i) { return k === seq[i]; })) {
       triggerKonami();
       buffer = [];
