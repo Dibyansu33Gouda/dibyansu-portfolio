@@ -54,8 +54,8 @@
         <div class="contact-row"><span class="k">linkedin</span><a class="v" href="https://linkedin.com/in/dibyansu-gouda" target="_blank" rel="noopener">in/dibyansu-gouda</a></div>
       </div>
 
-      <form class="contact-form" action="https://formspree.io/f/xqerqpao" method="POST">
-        <input type="hidden" name="_next" value="thankyou.html">
+      <form class="contact-form" id="contactForm" action="https://formspree.io/f/xqerqpao" method="POST">
+        <input type="hidden" name="_subject" value="New message from your portfolio">
         <input type="hidden" name="_replyto" id="_replyto" value="">
         <div class="form-row-2">
           <div>
@@ -76,15 +76,10 @@
           <textarea id="message" name="message" placeholder="say hello"></textarea>
         </div>
         <div>
-          <button type="submit" class="btn btn-primary">send message →</button>
+          <button type="submit" class="btn btn-primary" id="contactSubmitBtn">send message →</button>
         </div>
-        <p style="font-family:var(--font-mono); font-size:11px; color:var(--text-faint);">
-        </p>
+        <p id="contactError" style="display:none; font-family:var(--font-mono); font-size:12px; color:var(--danger); margin-top:8px;"></p>
       </form>
-      <div id="contact-success" class="contact-success" style="display:none; margin-top:1rem; font-family:var(--font-sans);">
-        <h3>Thanks — your message was sent.</h3>
-        <p>I’ll get back to you soon.</p>
-      </div>
     </div>
   </section>
 
@@ -94,22 +89,40 @@
 
 <script src="script.js"></script>
 <script>
-(function(){
-  var form = document.querySelector('.contact-form');
+(function () {
+  var form = document.getElementById('contactForm');
   if (!form) return;
   var reply = document.getElementById('_replyto');
   var emailInput = form.querySelector('input[name="email"]');
-  form.addEventListener('submit', function(){
-    if (reply && emailInput) reply.value = emailInput.value || '';
-  });
+  var btn = document.getElementById('contactSubmitBtn');
+  var errorEl = document.getElementById('contactError');
 
-  if (location.search.indexOf('success=true') !== -1) {
-    var success = document.getElementById('contact-success');
-    if (success) {
-      form.style.display = 'none';
-      success.style.display = 'block';
-    }
-  }
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (reply && emailInput) reply.value = emailInput.value || '';
+    errorEl.style.display = 'none';
+    btn.disabled = true;
+    btn.textContent = 'sending…';
+
+    fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    }).then(function (res) {
+      if (res.ok) {
+        window.location.href = 'thankyou.html';
+      } else {
+        return res.json().then(function (data) {
+          throw new Error((data && data.error) || 'Something went wrong — try again or email me directly.');
+        });
+      }
+    }).catch(function (err) {
+      btn.disabled = false;
+      btn.textContent = 'send message →';
+      errorEl.textContent = err.message || 'Something went wrong — try again or email me directly.';
+      errorEl.style.display = 'block';
+    });
+  });
 })();
 </script>
 </body>
