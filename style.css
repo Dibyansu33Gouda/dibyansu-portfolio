@@ -124,6 +124,32 @@ body {
   color: var(--text); font-family: var(--font-mono); font-size: 13.5px;
 }
 .tw-input::placeholder { color: var(--text-faint); }
+
+/* ---------- smooth page-to-page transitions (native browser API, no JS) ---------- */
+@view-transition {
+  navigation: auto;
+}
+/* keep the header feeling like a persistent shell rather than cross-fading with content */
+.termbar { view-transition-name: site-header; }
+
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: .35s;
+    animation-timing-function: cubic-bezier(.22,.61,.36,1);
+  }
+  ::view-transition-old(root) { animation-name: vt-fade-out; }
+  ::view-transition-new(root) { animation-name: vt-fade-in; }
+}
+@keyframes vt-fade-out {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(-8px); }
+}
+@keyframes vt-fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 .reveal {
   opacity: 0; transform: translateY(18px);
   transition: opacity .6s cubic-bezier(.22,.61,.36,1), transform .6s cubic-bezier(.22,.61,.36,1);
