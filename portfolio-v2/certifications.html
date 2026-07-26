@@ -19,6 +19,7 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<a href="#main" class="skip-link">Skip to content</a>
 
 <div class="termbar">
   <div class="termbar-inner">
@@ -27,7 +28,7 @@
       <span class="termbar-title">dibyansu@portfolio:~/certifications</span>
     </div>
     <div class="termbar-right">
-      <nav class="termnav" id="termnav">
+      <nav class="termnav" id="termnav" aria-label="Primary">
         <a href="index.html"><span class="idx">01</span> home</a>
         <a href="projects.html"><span class="idx">02</span> projects</a>
         <a href="certifications.html" class="active"><span class="idx">03</span> certifications</a>
@@ -35,12 +36,12 @@
         <a href="contact.html"><span class="idx">05</span> contact</a>
       </nav>
       <button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()">[ dark ]</button>
-      <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle menu">☰</button>
+      <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="termnav">☰</button>
     </div>
   </div>
 </div>
 
-<div class="wrap">
+<main id="main" class="wrap">
   <section class="page-section" style="border-bottom:1px solid var(--border);">
     <div class="sec-head"><span class="cmd">$ ls -la</span><h2>certifications/</h2></div>
     <p class="sec-lede">Credentials from self-directed learning alongside coursework — listed here as records, not as a substitute for the projects.</p>
@@ -48,7 +49,7 @@
     <!-- To add a certification: add one object to the CERTS array below. -->
     <div id="cards-root"></div>
   </section>
-</div>
+</main>
 
 <footer data-footer-date>built by dibyansu — last commit {{DATE}}</footer>
 

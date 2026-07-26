@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://dibyansu33gouda.github.io/dibyansu-portfolio/sitemap.xml

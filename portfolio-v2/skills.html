@@ -19,6 +19,7 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<a href="#main" class="skip-link">Skip to content</a>
 
 <div class="termbar">
   <div class="termbar-inner">
@@ -27,7 +28,7 @@
       <span class="termbar-title">dibyansu@portfolio:~/skills</span>
     </div>
     <div class="termbar-right">
-      <nav class="termnav" id="termnav">
+      <nav class="termnav" id="termnav" aria-label="Primary">
         <a href="index.html"><span class="idx">01</span> home</a>
         <a href="projects.html"><span class="idx">02</span> projects</a>
         <a href="certifications.html"><span class="idx">03</span> certifications</a>
@@ -35,12 +36,12 @@
         <a href="contact.html"><span class="idx">05</span> contact</a>
       </nav>
       <button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()">[ dark ]</button>
-      <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle menu">☰</button>
+      <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="termnav">☰</button>
     </div>
   </div>
 </div>
 
-<div class="wrap">
+<main id="main" class="wrap">
 
   <section class="page-section" style="border-bottom:1px solid var(--border);">
     <div class="sec-head"><span class="cmd">$ cat</span><h2>skills.json</h2></div>
@@ -81,14 +82,14 @@
     <div class="sec-head"><span class="cmd">$ git log --author=dibyansu --graph</span><h2>activity/</h2></div>
     <p class="sec-lede">Live from GitHub — updates on its own, nothing here is hand-edited.</p>
     <div class="gh-graph-wrap reveal">
-  <img class="gh-graph gh-graph-dark"
-       src="https://github-readme-activity-graph.vercel.app/graph?username=Dibyansu33Gouda&theme=react-dark&hide_border=true&bg_color=12140F&color=E8E6DA&line=E8A33D&point=5FADA4&area=true&area_color=E8A33D"
-       alt="GitHub contribution activity graph" loading="lazy"
-       onerror="this.closest('.gh-graph-wrap').style.display='none'; document.getElementById('ghFallback').style.display='block';">
-  <img class="gh-graph gh-graph-light"
-       src="https://github-readme-activity-graph.vercel.app/graph?username=Dibyansu33Gouda&theme=minimal&hide_border=true&bg_color=F3F1EA&color=141413&line=C05A3A&point=4C6C8C&area=true&area_color=C05A3A"
-       alt="GitHub contribution activity graph" loading="lazy">
-</div>
+      <img class="gh-graph gh-graph-dark"
+           src="https://github-readme-activity-graph.vercel.app/graph?username=Dibyansu33Gouda&theme=react-dark&hide_border=true&bg_color=12140F&color=E8E6DA&line=E8A33D&point=5FADA4&area=true&area_color=E8A33D"
+           alt="GitHub contribution activity graph" loading="lazy"
+           onerror="this.closest('.gh-graph-wrap').style.display='none'; document.getElementById('ghFallback').style.display='block';">
+      <img class="gh-graph gh-graph-light"
+           src="https://github-readme-activity-graph.vercel.app/graph?username=Dibyansu33Gouda&theme=minimal&hide_border=true&bg_color=F3F1EA&color=141413&line=C05A3A&point=4C6C8C&area=true&area_color=C05A3A"
+           alt="GitHub contribution activity graph" loading="lazy">
+    </div>
     <p class="gh-graph-fallback" id="ghFallback" style="display:none;">
       Graph didn't load — see the full activity directly on <a href="https://github.com/Dibyansu33Gouda" target="_blank" rel="noopener">GitHub</a>.
     </p>
@@ -112,7 +113,7 @@
     </div>
   </section>
 
-</div>
+</main>
 
 <footer data-footer-date>built by dibyansu — last commit {{DATE}}</footer>
 

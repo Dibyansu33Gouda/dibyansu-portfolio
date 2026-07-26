@@ -19,7 +19,10 @@
       document.documentElement.removeAttribute('data-theme');
     }
     var btn = document.getElementById('themeToggleBtn');
-    if (btn) btn.textContent = t === 'light' ? '[ light ]' : '[ dark ]';
+    if (btn) {
+      btn.textContent = t === 'light' ? '[ light ]' : '[ dark ]';
+      btn.setAttribute('aria-pressed', t === 'light' ? 'true' : 'false');
+    }
   }
 })();
 
@@ -29,7 +32,8 @@
   var nav = document.getElementById('termnav');
   if (!toggle || !nav) return;
   toggle.addEventListener('click', function () {
-    nav.classList.toggle('open');
+    var isOpen = nav.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
   });
 })();
 
