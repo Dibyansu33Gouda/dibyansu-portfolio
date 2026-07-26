@@ -52,34 +52,41 @@
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  body::before { animation: none !important; }
 }
 
 body {
   background: var(--bg);
-  background-image:
-    radial-gradient(ellipse 900px 500px at 15% -10%, color-mix(in srgb, var(--accent) 6%, transparent), transparent),
-    radial-gradient(ellipse 700px 500px at 90% 15%, color-mix(in srgb, var(--accent-2) 5%, transparent), transparent);
-  background-repeat: no-repeat;
   color: var(--text);
   font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.65;
   min-height: 100vh;
+  overscroll-behavior-y: none;
   transition: background-color .25s ease, color .25s ease;
+}
+/* ambient glow: a fixed, transform-animated layer instead of an animated
+   background-position — avoids the scroll-repaint jank that
+   background-attachment:fixed causes, since transform is GPU-composited
+   and fully decoupled from the page's own scroll/paint cycle */
+body::before {
+  content: "";
+  position: fixed; inset: -10%; z-index: -2; pointer-events: none;
+  background-image:
+    radial-gradient(ellipse 900px 500px at 15% -10%, color-mix(in srgb, var(--accent) 6%, transparent), transparent),
+    radial-gradient(ellipse 700px 500px at 90% 15%, color-mix(in srgb, var(--accent-2) 5%, transparent), transparent);
+  background-repeat: no-repeat;
+  will-change: transform;
   animation: bg-drift 26s ease-in-out infinite alternate;
 }
 @keyframes bg-drift {
-  from { background-position: 0% 0%, 100% 0%; }
-  to   { background-position: 6% 4%, 94% 8%; }
-}
-@media (hover: hover) and (pointer: fine) {
-  /* subtle depth: background stays put while content scrolls over it */
-  body { background-attachment: fixed, fixed; }
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(1.5%, 2%, 0); }
 }
 
 /* ---------- live GitHub activity graph ---------- */
@@ -286,8 +293,9 @@ section:last-of-type { border-bottom: none; }
   position: relative; z-index: 1;
   border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-panel);
   margin-bottom: 18px; overflow: hidden;
-  transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+  transition: border-color .2s ease, transform .35s cubic-bezier(.22,.61,.36,1), box-shadow .2s ease;
 }
+.card.tilting { transition: border-color .2s ease, box-shadow .2s ease; } /* transform tracks the cursor instantly while active */
 .card:hover {
   border-color: var(--accent);
   transform: translateY(-4px);

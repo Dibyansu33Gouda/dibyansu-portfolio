@@ -245,6 +245,7 @@ function renderCerts(items) {
     if (attached.has(card)) return;
     attached.add(card);
     card.addEventListener('mousemove', function (e) {
+      card.classList.add('tilting'); // instant tracking, no transition lag, while cursor is over the card
       var rect = card.getBoundingClientRect();
       var px = (e.clientX - rect.left) / rect.width - 0.5;
       var py = (e.clientY - rect.top) / rect.height - 0.5;
@@ -255,6 +256,7 @@ function renderCerts(items) {
       card.style.setProperty('--glow-y', (50 + py * 60) + '%');
     });
     card.addEventListener('mouseleave', function () {
+      card.classList.remove('tilting'); // re-enable the transition so it glides back smoothly
       card.style.transform = '';
       card.style.removeProperty('--glow-x');
       card.style.removeProperty('--glow-y');
