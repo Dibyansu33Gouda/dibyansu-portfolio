@@ -273,6 +273,56 @@ function renderCerts(items) {
   }
 })();
 
+// ---------- konami code easter egg ----------
+(function () {
+  var seq = ['arrowup', 'arrowup', 'arrowdown', 'arrowdown', 'arrowleft', 'arrowright', 'arrowleft', 'arrowright', 'b', 'a'];
+  var buffer = [];
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  document.addEventListener('keydown', function (e) {
+    var key = e.key.toLowerCase();
+    buffer.push(key);
+    if (buffer.length > seq.length) buffer.shift();
+    if (buffer.length === seq.length && buffer.every(function (k, i) { return k === seq[i]; })) {
+      triggerKonami();
+      buffer = [];
+    }
+  });
+
+  function triggerKonami() {
+    if (reduced) {
+      showToast('\u2191\u2191\u2193\u2193\u2190\u2192\u2190\u2192BA \u2014 cheat code accepted.');
+      return;
+    }
+    showToast('\u2191\u2191\u2193\u2193\u2190\u2192\u2190\u2192BA \u2014 cheat code accepted. Engaging cheat mode\u2026');
+    var prevTheme = document.documentElement.getAttribute('data-theme');
+    document.documentElement.setAttribute('data-theme', 'cheat');
+    setTimeout(function () {
+      if (prevTheme) {
+        document.documentElement.setAttribute('data-theme', prevTheme);
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+      }
+    }, 4000);
+  }
+
+  function showToast(msg) {
+    var existing = document.getElementById('konamiToast');
+    if (existing) existing.remove();
+    var toast = document.createElement('div');
+    toast.id = 'konamiToast';
+    toast.className = 'konami-toast';
+    toast.setAttribute('role', 'status');
+    toast.textContent = msg;
+    document.body.appendChild(toast);
+    requestAnimationFrame(function () { toast.classList.add('show'); });
+    setTimeout(function () {
+      toast.classList.remove('show');
+      setTimeout(function () { toast.remove(); }, 400);
+    }, 4200);
+  }
+})();
+
 // ---------- footer last-updated date ----------
 (function () {
   var f = document.querySelector('[data-footer-date]');

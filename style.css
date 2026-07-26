@@ -372,6 +372,26 @@ footer {
 }
 [data-theme="light"] footer { background: #EFE9DC; border-top-color: var(--accent-dim); }
 
+/* ---------- konami code: temporary cheat theme + toast ---------- */
+[data-theme="cheat"] {
+  --bg: #000000; --bg-panel: #001a06; --bg-panel-2: #00240a;
+  --border: #013d12; --border-bright: #00ff41;
+  --text: #00ff41; --text-dim: #00cc35; --text-faint: #009929;
+  --accent: #00ff41; --accent-dim: #073d17;
+  --accent-2: #39ff88; --accent-2-dim: #0f3d22;
+  --danger: #ff3b3b; --ok: #00ff41;
+  --font-body: var(--font-mono);
+}
+.konami-toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translate(-50%, 12px);
+  background: var(--bg-panel); border: 1px solid var(--accent); color: var(--accent);
+  font-family: var(--font-mono); font-size: 13px; padding: 12px 20px; border-radius: var(--radius);
+  opacity: 0; transition: opacity .3s ease, transform .3s ease; z-index: 200;
+  box-shadow: 0 8px 28px -10px color-mix(in srgb, var(--accent) 50%, transparent);
+  pointer-events: none; text-align: center; max-width: 90vw;
+}
+.konami-toast.show { opacity: 1; transform: translate(-50%, 0); }
+
 @media (max-width: 680px) {
   .termnav { position: fixed; inset: 49px 0 auto 0; background: var(--bg); border-bottom: 1px solid var(--border);
     flex-direction: column; gap: 0; padding: 8px 24px; display: none; }
