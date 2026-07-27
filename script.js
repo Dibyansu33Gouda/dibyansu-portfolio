@@ -47,28 +47,76 @@
   });
 
   if (!boot) return;
-  var lines = [
-    '<span class="entry-command"><span>dibyansu@portfolio:~$</span> ./open-portfolio</span>',
-    '<span class="entry-output">loading <strong>profile.md</strong> <span class="entry-success">done</span></span>',
-    '<span class="entry-command"><span>dibyansu@portfolio:~$</span> ls --inside</span>',
-    '<span class="entry-output">projects/ &nbsp; certifications/ &nbsp; skills/ &nbsp; contact/</span>',
-    '<span class="entry-command"><span>dibyansu@portfolio:~$</span> launch home<span class="entry-cursor" aria-hidden="true"></span></span>'
-  ];
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var delay = reduced ? 0 : 850;
-  lines.forEach(function (line, i) {
-    setTimeout(function () { boot.insertAdjacentHTML('beforeend', '<div>' + line + '</div>'); }, i * delay);
-  });
-  var commandEnd = (lines.length - 1) * delay + (reduced ? 0 : 700);
-  var reveals = document.querySelectorAll('.entry-reveal');
-  reveals.forEach(function (el, i) {
-    setTimeout(function () { el.classList.add('is-visible'); }, commandEnd + i * (reduced ? 0 : 700));
-  });
-  var total = Math.max(commandEnd + reveals.length * (reduced ? 0 : 700) + 2300, 7000);
-  setTimeout(function () {
-    if (hint) hint.innerHTML = 'portfolio ready — entering now <span aria-hidden="true">·</span> <a href="' + home + '">enter now</a>';
-  }, total - 500);
-  setTimeout(enterPortfolio, total);
+  var lines = [
+    { type: 'command', text: './open-portfolio' },
+    { type: 'output', text: 'connecting to dibyansu@portfolio... established' },
+    { type: 'command', text: 'cat profile.md' },
+    { type: 'output', text: 'CSE student · NIST University · AI engineering' },
+    { type: 'command', text: 'ls --inside' },
+    { type: 'output', text: 'projects/  certifications/  skills/  contact/' }
+  ];
+  var TYPE_SPEED = reduced ? 0 : 28;
+  var LINE_PAUSE = reduced ? 0 : 260;
+
+  function typeLine(line, done) {
+    var row = document.createElement('div');
+    var text = document.createElement('span');
+    text.className = line.type === 'command' ? 'entry-command' : 'entry-output';
+    if (line.type === 'command') {
+      var prompt = document.createElement('span');
+      prompt.textContent = 'dibyansu@portfolio:~$';
+      text.appendChild(prompt);
+      text.appendChild(document.createTextNode(' '));
+    }
+    row.appendChild(text);
+    boot.appendChild(row);
+    var i = 0;
+    function tick() {
+      text.appendChild(document.createTextNode(line.text.charAt(i)));
+      i++;
+      if (i < line.text.length) setTimeout(tick, TYPE_SPEED);
+      else setTimeout(done, LINE_PAUSE);
+    }
+    if (line.text.length) tick(); else done();
+  }
+
+  function typeName(done) {
+    var title = document.getElementById('entry-title');
+    if (!title) { done(); return; }
+    var prefix = title.dataset.prefix || 'Hello, I’m ';
+    var name = title.dataset.name || 'Dibyansu Gouda.';
+    title.classList.add('is-visible');
+    title.textContent = prefix;
+    var accent = document.createElement('span');
+    title.appendChild(accent);
+    var i = 0;
+    function tick() {
+      accent.textContent += name.charAt(i);
+      i++;
+      if (i < name.length) setTimeout(tick, reduced ? 0 : 58);
+      else setTimeout(done, reduced ? 0 : 420);
+    }
+    tick();
+  }
+
+  function revealRest() {
+    var reveals = Array.prototype.slice.call(document.querySelectorAll('.entry-reveal')).filter(function (el) { return el.id !== 'entry-title'; });
+    reveals.forEach(function (el, i) {
+      setTimeout(function () { el.classList.add('is-visible'); }, i * (reduced ? 0 : 620));
+    });
+    var total = reveals.length * (reduced ? 0 : 620) + (reduced ? 1800 : 2300);
+    setTimeout(function () {
+      if (hint) hint.innerHTML = 'portfolio ready — entering now <span aria-hidden="true">·</span> <a href="' + home + '">enter now</a>';
+    }, total - 500);
+    setTimeout(enterPortfolio, total);
+  }
+
+  function runLine(index) {
+    if (index < lines.length) typeLine(lines[index], function () { runLine(index + 1); });
+    else typeName(revealRest);
+  }
+  runLine(0);
 })();
 
 // ---------- mobile nav ----------

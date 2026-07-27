@@ -191,7 +191,7 @@ a:hover { text-decoration: underline; }
 .entry-kicker, .entry-command, .entry-hint { font: 13px var(--font-mono); color: var(--text-faint); }
 .entry-kicker { display: flex; gap: 9px; align-items: center; }
 .entry-ok { color: var(--ok); font-size: 10px; }.entry-rule { color: var(--border-bright); overflow: hidden; white-space: nowrap; }
-.entry-boot { min-height: 116px; margin-top: 42px; font: 13px/1.85 var(--font-mono); color: var(--text-dim); }
+.entry-boot { min-height: 144px; margin-top: 42px; font: 13px/1.85 var(--font-mono); color: var(--text-dim); }
 .entry-command { color: var(--accent-2); }.entry-command span { color: var(--accent); }
 .entry-output { color: var(--text-faint); padding-left: 2ch; }.entry-output strong { color: var(--text-dim); font-weight: 500; }.entry-success { color: var(--ok); }.entry-cursor { display: inline-block; width: 7px; height: 14px; margin-left: 3px; background: var(--accent); vertical-align: -2px; animation: blink 1s steps(1) infinite; }
 .entry-ready .entry-reveal { opacity: 0; transform: translateY(12px); transition: opacity .65s cubic-bezier(.22,.61,.36,1), transform .65s cubic-bezier(.22,.61,.36,1); }
@@ -432,7 +432,7 @@ footer {
 @media (max-width: 680px) {
   .entry-shell { width: min(100% - 28px, 900px); padding: 14px 0 30px; gap: 18px; }
   .entry-body { padding: 30px 24px; }
-  .entry-boot { margin-top: 32px; min-height: 130px; }
+  .entry-boot { margin-top: 32px; min-height: 154px; }
   .entry-rule { display: none; }
   .entry-hint { margin-top: 40px; }
   .entry-footer { padding: 11px 14px; font-size: 10px; }
