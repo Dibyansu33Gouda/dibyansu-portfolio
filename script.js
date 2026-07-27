@@ -26,12 +26,42 @@
   }
 })();
 
-// ---------- entry page: Enter opens the portfolio ----------
+// ---------- entry page: terminal boot sequence + automatic hand-off ----------
 (function () {
-  if (!document.querySelector('.entry-shell')) return;
+  var shell = document.querySelector('.entry-shell');
+  if (!shell) return;
+  var boot = document.getElementById('entryBoot');
+  var hint = document.getElementById('entryHint');
+  var home = 'home.html';
+  var hasLeft = false;
+
+  function enterPortfolio() {
+    if (hasLeft) return;
+    hasLeft = true;
+    location.href = home;
+  }
+
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter' && !e.altKey && !e.ctrlKey && !e.metaKey && e.target.tagName !== 'A') location.href = 'home.html';
+    if (e.key === 'Enter' && !e.altKey && !e.ctrlKey && !e.metaKey && e.target.tagName !== 'A') enterPortfolio();
   });
+
+  if (!boot) return;
+  var lines = [
+    '<span class="entry-command"><span>dibyansu@portfolio:~$</span> ./open-portfolio</span>',
+    '<span class="entry-output">loading <strong>profile.md</strong> <span class="entry-success">done</span></span>',
+    '<span class="entry-command"><span>dibyansu@portfolio:~$</span> ls --inside</span>',
+    '<span class="entry-output">projects/ &nbsp; certifications/ &nbsp; skills/ &nbsp; contact/</span>',
+    '<span class="entry-command"><span>dibyansu@portfolio:~$</span> launch home<span class="entry-cursor" aria-hidden="true"></span></span>'
+  ];
+  var delay = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 600;
+  lines.forEach(function (line, i) {
+    setTimeout(function () { boot.insertAdjacentHTML('beforeend', '<div>' + line + '</div>'); }, i * delay);
+  });
+  var total = Math.max((lines.length - 1) * delay + 1150, 4500);
+  setTimeout(function () {
+    if (hint) hint.innerHTML = 'portfolio ready — opening now <span aria-hidden="true">·</span> <a href="' + home + '">enter now</a>';
+  }, total - 500);
+  setTimeout(enterPortfolio, total);
 })();
 
 // ---------- mobile nav ----------
