@@ -148,7 +148,7 @@ function renderCerts(items) {
     var link = c.href
       ? '<a href="' + c.href + '" target="_blank" rel="noopener">view credential \u2197</a>'
       : '<a href="#" class="disabled">view credential \u2014 [ add link ]</a>';
-    var thumbUrl = driveThumb(c.href, 800);
+    var thumbUrl = c.thumb || driveThumb(c.href, 800);
     var thumb = thumbUrl
       ? '<div class="cert-thumb"><img src="' + thumbUrl + '" alt="' + c.name + ' — first page preview" loading="lazy" onerror="this.closest(\'.cert-thumb\').remove()"></div>'
       : '';
