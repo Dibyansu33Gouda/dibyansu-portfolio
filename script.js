@@ -34,6 +34,7 @@
   var hint = document.getElementById('entryHint');
   var home = 'home.html';
   var hasLeft = false;
+  document.body.classList.add('entry-ready');
 
   function enterPortfolio() {
     if (hasLeft) return;
@@ -53,13 +54,19 @@
     '<span class="entry-output">projects/ &nbsp; certifications/ &nbsp; skills/ &nbsp; contact/</span>',
     '<span class="entry-command"><span>dibyansu@portfolio:~$</span> launch home<span class="entry-cursor" aria-hidden="true"></span></span>'
   ];
-  var delay = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 600;
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var delay = reduced ? 0 : 850;
   lines.forEach(function (line, i) {
     setTimeout(function () { boot.insertAdjacentHTML('beforeend', '<div>' + line + '</div>'); }, i * delay);
   });
-  var total = Math.max((lines.length - 1) * delay + 1150, 4500);
+  var commandEnd = (lines.length - 1) * delay + (reduced ? 0 : 700);
+  var reveals = document.querySelectorAll('.entry-reveal');
+  reveals.forEach(function (el, i) {
+    setTimeout(function () { el.classList.add('is-visible'); }, commandEnd + i * (reduced ? 0 : 700));
+  });
+  var total = Math.max(commandEnd + reveals.length * (reduced ? 0 : 700) + 2300, 7000);
   setTimeout(function () {
-    if (hint) hint.innerHTML = 'portfolio ready — opening now <span aria-hidden="true">·</span> <a href="' + home + '">enter now</a>';
+    if (hint) hint.innerHTML = 'portfolio ready — entering now <span aria-hidden="true">·</span> <a href="' + home + '">enter now</a>';
   }, total - 500);
   setTimeout(enterPortfolio, total);
 })();
