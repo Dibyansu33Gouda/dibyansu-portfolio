@@ -1,3 +1,8 @@
+// ---------- shared SVG icon markup ----------
+function iconSvg(name, className) {
+  return '<svg class="icon ' + (className || '') + '" aria-hidden="true"><use href="assets/icons.svg#' + name + '"></use></svg>';
+}
+
 // ---------- theme (persisted, defaults to dark) ----------
 (function () {
   var stored = null;
@@ -20,7 +25,9 @@
     }
     var btn = document.getElementById('themeToggleBtn');
     if (btn) {
-      btn.textContent = t === 'light' ? '[ light ]' : '[ dark ]';
+      var icon = t === 'light' ? 'sun' : 'moon';
+      btn.innerHTML = iconSvg(icon, 'icon-theme icon-theme-' + icon) + '<span>' + (t === 'light' ? 'light' : 'dark') + '</span>';
+      btn.setAttribute('aria-label', 'Switch to ' + (t === 'light' ? 'dark' : 'light') + ' theme');
       btn.setAttribute('aria-pressed', t === 'light' ? 'true' : 'false');
     }
   }
@@ -214,11 +221,11 @@ function renderProjects(items) {
     var chips = (p.tags || []).map(function (t) { return '<span class="chip">' + t + '</span>'; }).join('');
     var links = '';
     links += p.source
-      ? '<a href="' + p.source + '" target="_blank" rel="noopener">source \u2197</a>'
+      ? '<a href="' + p.source + '" target="_blank" rel="noopener">source' + iconSvg('external', 'icon-link icon-extlink') + '</a>'
       : '<a href="#" class="disabled">source \u2014 [ add repo link ]</a>';
-    if (p.demo) links += '<a href="' + p.demo + '" target="_blank" rel="noopener">live demo \u2197</a>';
+    if (p.demo) links += '<a href="' + p.demo + '" target="_blank" rel="noopener">live demo' + iconSvg('external', 'icon-link icon-extlink') + '</a>';
     return '<div class="card reveal" data-delay="' + Math.min(i * 60, 300) + 'ms">' +
-      '<div class="card-head"><span class="card-name">' + p.name + '/</span>' +
+      '<div class="card-head"><span class="card-name">' + iconSvg('folder', 'icon-folder-tag icon-folder') + p.name + '/</span>' +
       '<span class="pill ' + (pillClass[p.status] || 'pill-done') + '">' + p.status + '</span></div>' +
       '<div class="card-body"><p class="card-desc">' + p.desc + '</p>' + log +
       '<div class="chip-row">' + chips + '</div>' +
@@ -239,7 +246,7 @@ function renderCerts(items) {
   if (!root || !items) return;
   root.innerHTML = items.map(function (c, i) {
     var link = c.href
-      ? '<a href="' + c.href + '" target="_blank" rel="noopener">view credential \u2197</a>'
+      ? '<a href="' + c.href + '" target="_blank" rel="noopener">view credential' + iconSvg('external', 'icon-link icon-extlink') + '</a>'
       : '<a href="#" class="disabled">view credential \u2014 [ add link ]</a>';
     var thumbUrl = c.thumb || driveThumb(c.href, 800);
     var thumb = thumbUrl

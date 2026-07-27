@@ -16,6 +16,8 @@
 <meta name="twitter:title" content="Certifications — Dibyansu Gouda">
 <meta name="twitter:description" content="Certifications from Cisco, IBM, Microsoft, and a couple of hackathons — each linked to the actual credential.">
 <meta name="twitter:image" content="https://dibyansu33gouda.github.io/dibyansu-portfolio/assets/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -29,13 +31,13 @@
     </div>
     <div class="termbar-right">
       <nav class="termnav" id="termnav" aria-label="Primary">
-        <a href="home.html"><span class="idx">01</span> home</a>
-        <a href="projects.html"><span class="idx">02</span> projects</a>
-        <a href="certifications.html" class="active"><span class="idx">03</span> certifications</a>
-        <a href="skills.html"><span class="idx">04</span> skills</a>
-        <a href="contact.html"><span class="idx">05</span> contact</a>
+        <a href="home.html"><span class="idx">01</span><svg class="icon icon-nav icon-home" aria-hidden="true"><use href="assets/icons.svg#home"></use></svg>home</a>
+        <a href="projects.html"><span class="idx">02</span><svg class="icon icon-nav icon-projects" aria-hidden="true"><use href="assets/icons.svg#projects"></use></svg>projects</a>
+        <a href="certifications.html" class="active"><span class="idx">03</span><svg class="icon icon-nav icon-certifications" aria-hidden="true"><use href="assets/icons.svg#certifications"></use></svg>certifications</a>
+        <a href="skills.html"><span class="idx">04</span><svg class="icon icon-nav icon-skills" aria-hidden="true"><use href="assets/icons.svg#skills"></use></svg>skills</a>
+        <a href="contact.html"><span class="idx">05</span><svg class="icon icon-nav icon-contact" aria-hidden="true"><use href="assets/icons.svg#contact"></use></svg>contact</a>
       </nav>
-      <button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()">[ dark ]</button>
+      <button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" aria-label="Switch theme"><svg class="icon icon-theme icon-theme-moon" aria-hidden="true"><use href="assets/icons.svg#moon"></use></svg><span>dark</span></button>
       <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="termnav">☰</button>
     </div>
   </div>
