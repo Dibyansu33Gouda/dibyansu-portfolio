@@ -298,7 +298,7 @@ function renderCerts(items) {
     home: function () { print('already home.'); },
     resume: function () {
       print('opening resume...');
-      window.open('https://drive.google.com/file/d/1nmS7qcL4PreTP0PJkvtV2_1E-4wBlIZb/view?usp=drive_link', '_blank');
+      window.open('https://drive.google.com/uc?export=download&id=1nmS7qcL4PreTP0PJkvtV2_1E-4wBlIZb', '_blank', 'noopener');
     },
     github: function () {
       print('opening github...');

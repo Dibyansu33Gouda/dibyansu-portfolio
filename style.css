@@ -445,6 +445,11 @@ footer {
   .entry-hint { margin-top: 40px; }
   .entry-footer { padding: 11px 14px; font-size: 10px; }
   .entry-details { grid-template-columns: 1fr; gap: 7px; padding: 0 4px; }
+  .termbar-inner { padding: 10px 16px; gap: 10px; }
+  .termbar-left { flex: 1 1 auto; min-width: 0; gap: 10px; }
+  .termbar-title { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+  .termbar-right { flex: 0 0 auto; gap: 8px; }
+  .theme-toggle { padding: 5px 8px; }
   .termnav { position: fixed; inset: 49px 0 auto 0; background: var(--bg); border-bottom: 1px solid var(--border);
     flex-direction: column; gap: 0; padding: 8px 24px; display: none; }
   .termnav.open { display: flex; }
