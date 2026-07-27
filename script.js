@@ -310,7 +310,7 @@ function renderCerts(items) {
 (function () {
   var input = document.getElementById('twInput');
   var body = document.getElementById('twBody');
-  var form = document.getElementById('twForm');
+  var runButton = document.getElementById('twRun');
   if (!input || !body) return;
 
   function print(html, cls) {
@@ -383,7 +383,7 @@ function renderCerts(items) {
     e.preventDefault();
     runCommand();
   });
-  if (form) form.addEventListener('submit', function (e) { e.preventDefault(); runCommand(); });
+  if (runButton) runButton.addEventListener('click', runCommand);
 })();
 
 // ---------- cursor-tilt 3D effect on cards ----------
