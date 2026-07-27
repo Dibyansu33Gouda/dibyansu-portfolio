@@ -50,7 +50,7 @@ function iconSvg(name, className) {
   }
 
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter' && !e.altKey && !e.ctrlKey && !e.metaKey && e.target.tagName !== 'A') enterPortfolio();
+    if (e.key === 'Enter' && !e.altKey && !e.ctrlKey && !e.metaKey && e.target.tagName !== 'A' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') enterPortfolio();
   });
 
   if (!boot) return;
@@ -124,6 +124,52 @@ function iconSvg(name, className) {
     else typeName(revealRest);
   }
   runLine(0);
+})();
+
+// ---------- command palette (Ctrl/Cmd + K) ----------
+(function () {
+  var resumeUrl = 'https://drive.google.com/uc?export=download&id=1nmS7qcL4PreTP0PJkvtV2_1E-4wBlIZb';
+  var commands = [
+    { label: 'Go to home', hint: 'home.html', icon: 'home', run: function () { location.href = 'home.html'; } },
+    { label: 'View projects', hint: 'projects.html', icon: 'projects', run: function () { location.href = 'projects.html'; } },
+    { label: 'View certifications', hint: 'certifications.html', icon: 'certifications', run: function () { location.href = 'certifications.html'; } },
+    { label: 'View skills', hint: 'skills.html', icon: 'skills', run: function () { location.href = 'skills.html'; } },
+    { label: 'Contact Dibyansu', hint: 'contact.html', icon: 'contact', run: function () { location.href = 'contact.html'; } },
+    { label: 'Download resume', hint: 'PDF', icon: 'external', run: function () { window.open(resumeUrl, '_blank', 'noopener'); } },
+    { label: 'Open GitHub', hint: 'github.com', icon: 'external', run: function () { window.open('https://github.com/Dibyansu33Gouda', '_blank', 'noopener'); } }
+  ];
+  var active = 0;
+  var filtered = commands;
+  var palette = document.createElement('div');
+  palette.className = 'command-palette';
+  palette.innerHTML = '<div class="palette-dialog" role="dialog" aria-modal="true" aria-label="Command palette"><label class="palette-search"><span aria-hidden="true">$</span><input type="text" autocomplete="off" placeholder="type a command..." aria-label="Search commands"></label><div class="palette-results" role="listbox"></div><div class="palette-footer"><span><kbd>↑↓</kbd> navigate</span><span><kbd>Enter</kbd> select</span><span><kbd>Esc</kbd> close</span></div></div>';
+  document.body.appendChild(palette);
+  var input = palette.querySelector('input');
+  var results = palette.querySelector('.palette-results');
+
+  function render() {
+    var query = input.value.trim().toLowerCase();
+    filtered = commands.filter(function (command) { return command.label.toLowerCase().indexOf(query) !== -1 || command.hint.toLowerCase().indexOf(query) !== -1; });
+    active = Math.min(active, Math.max(filtered.length - 1, 0));
+    if (!filtered.length) { results.innerHTML = '<p class="palette-empty">command not found</p>'; return; }
+    results.innerHTML = filtered.map(function (command, i) { return '<button type="button" class="palette-item" role="option" aria-selected="' + (i === active ? 'true' : 'false') + '" data-index="' + i + '">' + iconSvg(command.icon, '') + '<span>' + command.label + '</span><small>' + command.hint + '</small></button>'; }).join('');
+  }
+  function close() { palette.classList.remove('open'); }
+  function open() { palette.classList.add('open'); input.value = ''; active = 0; render(); setTimeout(function () { input.focus(); }, 0); }
+  function runActive() { if (filtered[active]) { close(); filtered[active].run(); } }
+
+  document.addEventListener('keydown', function (e) {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); palette.classList.contains('open') ? close() : open(); }
+    else if (e.key === 'Escape' && palette.classList.contains('open')) close();
+  });
+  input.addEventListener('input', function () { active = 0; render(); });
+  input.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowDown') { e.preventDefault(); active = Math.min(active + 1, filtered.length - 1); render(); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); active = Math.max(active - 1, 0); render(); }
+    else if (e.key === 'Enter') { e.preventDefault(); runActive(); }
+  });
+  results.addEventListener('click', function (e) { var button = e.target.closest('.palette-item'); if (button) { active = Number(button.dataset.index); runActive(); } });
+  palette.addEventListener('click', function (e) { if (e.target === palette) close(); });
 })();
 
 // ---------- mobile nav ----------
