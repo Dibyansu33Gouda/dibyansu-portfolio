@@ -310,6 +310,7 @@ function renderCerts(items) {
 (function () {
   var input = document.getElementById('twInput');
   var body = document.getElementById('twBody');
+  var form = document.getElementById('twForm');
   if (!input || !body) return;
 
   function print(html, cls) {
@@ -363,10 +364,9 @@ function renderCerts(items) {
     sudo: function () { print("Permission denied: you're not root here — nice try though."); }
   };
 
-  input.addEventListener('keydown', function (e) {
-    if (e.key !== 'Enter') return;
+  function runCommand() {
     var raw = input.value.trim();
-    if (!raw) return;
+    if (!raw) { input.focus(); return; }
     print('<span class="tw-prompt-inline">$</span> ' + raw.replace(/</g, '&lt;'), 'tw-cmdline');
     var cmd = raw.toLowerCase();
     if (commands[cmd]) {
@@ -375,7 +375,15 @@ function renderCerts(items) {
       print('command not found: ' + raw.replace(/</g, '&lt;') + " — type <span class='tw-cmd'>help</span> for a list", 'tw-err');
     }
     input.value = '';
+    input.focus();
+  }
+
+  input.addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter') return;
+    e.preventDefault();
+    runCommand();
   });
+  if (form) form.addEventListener('submit', function (e) { e.preventDefault(); runCommand(); });
 })();
 
 // ---------- cursor-tilt 3D effect on cards ----------

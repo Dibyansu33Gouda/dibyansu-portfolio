@@ -131,6 +131,7 @@ body::before {
   color: var(--text); font-family: var(--font-mono); font-size: 13.5px;
 }
 .tw-input::placeholder { color: var(--text-faint); }
+.tw-run { flex: 0 0 auto; border: 1px solid var(--border-bright); border-radius: var(--radius); background: var(--bg-panel-2); color: var(--accent); padding: 4px 8px; font: 12px var(--font-mono); cursor: pointer; }.tw-run:hover { border-color: var(--accent); color: var(--text); }
 
 /* ---------- shared SVG icons ---------- */
 .icon { display: inline-block; flex: 0 0 auto; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
@@ -470,6 +471,8 @@ footer {
   .termnav.open { display: flex; }
   .termnav a { padding: 10px 0; border-bottom: 1px solid var(--border); }
   .termnav a.active::after { right: auto; bottom: 5px; width: 70px; }
+  .tw-input { min-width: 0; font-size: 16px; }
+  .tw-run { padding: 6px 8px; }
   .mobile-nav-toggle {
     display: block; font-family: var(--font-mono); font-size: 18px; color: var(--text-dim);
     background: none; border: none; cursor: pointer;
