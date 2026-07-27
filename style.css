@@ -18,7 +18,7 @@
   --text: #E8E6DA;
   --text-dim: #8A8F7C;
   --text-faint: #565B4B;
-  --accent: #E8A33D;      /* amber */
+  --accent: #E3A03C;      /* slightly deeper amber */
   --accent-dim: #8C6524;
   --accent-2: #5FADA4;    /* teal */
   --accent-2-dim: #35625C;
@@ -40,7 +40,7 @@
   --text: #141413;
   --text-dim: #6B675C;
   --text-faint: #A29C8C;
-  --accent: #C05A3A;      /* clay / terracotta */
+  --accent: #BC5839;      /* slightly deeper clay / terracotta */
   --accent-dim: #E8CBB9;
   --accent-2: #4C6C8C;    /* muted blue */
   --accent-2-dim: #D3DEE7;
