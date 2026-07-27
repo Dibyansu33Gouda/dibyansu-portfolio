@@ -5,7 +5,8 @@ your current pixel-parade-311 site does.
 
 ## Structure
 ```
-index.html            → home (about only: intro, photo, resume)
+index.html            → deliberate entry page
+home.html             → main portfolio home (intro, photo, resume)
 projects.html          → project cards (text-first, no thumbnails)
 certifications.html    → certification cards
 skills.html             → skills grouped by category
@@ -18,7 +19,7 @@ assets/                   → drop your real files here (see below)
 ## Before you publish — fill these in
 
 1. **Photo** — save a square photo (500×500+) as `assets/photo.jpg`, then in
-   `index.html` swap the placeholder div for:
+   `home.html` swap the placeholder div for:
    ```html
    <div class="photo-slot"><img src="assets/photo.jpg" alt="Dibyansu Gouda"></div>
    ```

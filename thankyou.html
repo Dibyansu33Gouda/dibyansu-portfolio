@@ -25,7 +25,7 @@
     </div>
     <div class="termbar-right">
       <nav class="termnav" id="termnav" aria-label="Primary">
-        <a href="index.html"><span class="idx">01</span> home</a>
+        <a href="home.html"><span class="idx">01</span> home</a>
         <a href="projects.html"><span class="idx">02</span> projects</a>
         <a href="certifications.html"><span class="idx">03</span> certifications</a>
         <a href="skills.html"><span class="idx">04</span> skills</a>
@@ -44,7 +44,7 @@
       <h1>Thanks — your message has been sent.</h1>
       <p>I appreciate you reaching out. I’ll get back to you soon.</p>
       <p id="countdown" style="margin-top:1rem; color:var(--text-faint);">Redirecting in <strong id="count">6</strong>s…</p>
-      <p style="margin-top:0.6rem;"><a class="btn" href="index.html">back to home →</a>
+      <p style="margin-top:0.6rem;"><a class="btn" href="home.html">back to home →</a>
       <a style="margin-left:1rem;" class="btn" href="contact.html">send another message →</a></p>
     </div>
   </section>
@@ -64,7 +64,7 @@
       if (secs <= 0) {
         clearInterval(iv);
         if (countdownEl) countdownEl.textContent = 'Redirecting…';
-        window.location.href = 'index.html';
+        window.location.href = 'home.html';
         return;
       }
       el.textContent = secs;

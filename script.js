@@ -26,6 +26,14 @@
   }
 })();
 
+// ---------- entry page: Enter opens the portfolio ----------
+(function () {
+  if (!document.querySelector('.entry-shell')) return;
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && !e.altKey && !e.ctrlKey && !e.metaKey && e.target.tagName !== 'A') location.href = 'home.html';
+  });
+})();
+
 // ---------- mobile nav ----------
 (function () {
   var toggle = document.getElementById('mobileNavToggle');
