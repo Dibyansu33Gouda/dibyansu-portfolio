@@ -354,7 +354,58 @@ function renderCerts(items) {
     recentRoot.innerHTML = recent.length ? recent.map(function (p) { return '<article class="dsa-solve"><time>' + formatDate(p.date) + '</time><div><strong>' + escapeHtml(p.name) + '</strong><span>' + escapeHtml(p.topic || 'DSA') + (p.difficulty ? ' · ' + escapeHtml(p.difficulty) : '') + '</span></div>' + (p.url ? '<a href="' + escapeHtml(p.url) + '" target="_blank" rel="noopener">solution ↗</a>' : '') + '</article>'; }).join('') : '<p class="dsa-empty">Your recently solved problems will appear here after the first sync.</p>';
     if (data.profiles && data.profiles.solutions) { var link = document.getElementById('solutionsLink'); link.href = data.profiles.solutions; link.hidden = false; }
   }
-  fetch('data/dsa-progress.json', { cache: 'no-store' }).then(function (res) { if (!res.ok) throw new Error('Tracker data unavailable'); return res.json(); }).then(render).catch(function () { summary.innerHTML = '<p class="dsa-empty">The DSA tracker is being prepared. See my <a href="https://leetcode.com/u/dibyansu_44/" target="_blank" rel="noopener">LeetCode profile</a> in the meantime.</p>'; });
+  // The solutions repository is the live source of truth. This needs no API key
+  // because the repository is public; local JSON remains a graceful fallback.
+  function liveGitHubData() {
+    var repo = 'Dibyansu33Gouda/DSA_practice_Dib';
+    var api = 'https://api.github.com/repos/' + repo;
+    return Promise.all([
+      fetch(api + '/git/trees/HEAD?recursive=1').then(function (res) { if (!res.ok) throw new Error('Could not read solution files'); return res.json(); }),
+      fetch(api + '/commits?per_page=100').then(function (res) { if (!res.ok) throw new Error('Could not read solution commits'); return res.json(); })
+    ]).then(function (result) {
+      var tree = result[0].tree || [];
+      var commits = result[1] || [];
+      var files = tree.filter(function (item) {
+        var path = item.path.toLowerCase();
+        return item.type === 'blob' && !path.startsWith('.') && !/(^|\/)readme(\.|$)/.test(path) && path !== 'progress.json';
+      });
+      var byDay = {};
+      commits.forEach(function (commit) {
+        var date = (commit.commit && commit.commit.author && commit.commit.author.date || '').slice(0, 10);
+        if (!date) return;
+        if (!byDay[date]) byDay[date] = { date: date, count: 0, problems: [] };
+        byDay[date].count++;
+        byDay[date].problems.push({ name: (commit.commit.message || 'DSA solution').split('\n')[0], url: commit.html_url });
+      });
+      var dates = Object.keys(byDay).sort().reverse();
+      var longest = 0, run = 0, previous = null;
+      dates.slice().reverse().forEach(function (date) {
+        var current = new Date(date + 'T00:00:00Z');
+        if (previous && (current - previous) / 86400000 === 1) run++; else run = 1;
+        if (run > longest) longest = run;
+        previous = current;
+      });
+      var currentStreak = 0;
+      if (dates.length) {
+        var cursor = new Date(dates[0] + 'T00:00:00Z');
+        for (var i = 0; i < dates.length; i++) {
+          if (dates[i] !== dayKey(cursor)) break;
+          currentStreak++;
+          cursor.setUTCDate(cursor.getUTCDate() - 1);
+        }
+      }
+      return {
+        updatedAt: new Date().toISOString(), roadmap: "Striver's A2Z DSA Sheet",
+        profiles: { leetcode: 'https://leetcode.com/u/dibyansu_44/', takeUForward: 'https://takeuforward.org/profile/dibyansu_44', solutions: 'https://github.com/' + repo },
+        solved: files.length, currentStreak: currentStreak, longestStreak: longest,
+        topics: [], activity: dates.map(function (date) { return byDay[date]; }),
+        recent: commits.slice(0, 6).map(function (commit) { return { date: (commit.commit.author.date || '').slice(0, 10), name: (commit.commit.message || 'DSA solution').split('\n')[0], topic: 'DSA practice', url: commit.html_url }; })
+      };
+    });
+  }
+  liveGitHubData().then(render).catch(function () {
+    return fetch('data/dsa-progress.json', { cache: 'no-store' }).then(function (res) { if (!res.ok) throw new Error('Tracker data unavailable'); return res.json(); }).then(render);
+  }).catch(function () { summary.innerHTML = '<p class="dsa-empty">The DSA tracker is temporarily unavailable. See my <a href="https://github.com/Dibyansu33Gouda/DSA_practice_Dib" target="_blank" rel="noopener">solutions repository</a> in the meantime.</p>'; });
 })();
 // ---------- functional terminal widget (home page) ----------
 (function () {
