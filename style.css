@@ -130,7 +130,7 @@ body::before {
 .tw-input {
   flex: 1; background: transparent; border: none; outline: none;
   color: var(--text); font-family: var(--font-mono); font-size: 13.5px;
-}
+} 
 .tw-input::placeholder { color: var(--text-faint); }
 .tw-run { flex: 0 0 auto; border: 1px solid var(--border-bright); border-radius: var(--radius); background: var(--bg-panel-2); color: var(--accent); padding: 4px 8px; font: 12px var(--font-mono); cursor: pointer; }.tw-run:hover { border-color: var(--accent); color: var(--text); }
 

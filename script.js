@@ -313,19 +313,6 @@ function renderCerts(items) {
   var runButton = document.getElementById('twRun');
   if (!input || !body) return;
 
-  // swap the static "Welcome" line for a time-aware one, if the greeting is still untouched
-  (function greetByTime() {
-    var firstLine = body.querySelector('.tw-line');
-    if (!firstLine) return;
-    var hour = new Date().getHours();
-    if (hour >= 0 && hour < 5) {
-      firstLine.innerHTML = "Still up? Same. It's past midnight here too — type <span class=\"tw-cmd\">help</span> to see what this does.";
-    } else if (hour >= 5 && hour < 8) {
-      firstLine.innerHTML = 'Early riser. Type <span class="tw-cmd">help</span> to see what this does.';
-    }
-    // daytime hours keep the original default markup already in the HTML
-  })();
-
   function print(html, cls) {
     var div = document.createElement('div');
     div.className = 'tw-line ' + (cls || 'tw-out');
@@ -339,25 +326,12 @@ function renderCerts(items) {
     setTimeout(function () { location.href = url; }, 350);
   }
 
-  // ---------- time-of-day awareness: real local clock, not a fixed trigger ----------
-  function getTimeContext() {
-    var h = new Date().getHours();
-    if (h >= 0 && h < 5)  return { period: 'late night',    note: "it's past midnight here — still up, still shipping." };
-    if (h >= 5 && h < 8)  return { period: 'early morning', note: 'early start. respect.' };
-    if (h >= 8 && h < 12) return { period: 'morning',       note: 'good morning.' };
-    if (h >= 12 && h < 17) return { period: 'afternoon',    note: 'good afternoon.' };
-    if (h >= 17 && h < 21) return { period: 'evening',      note: 'good evening.' };
-    return { period: 'night', note: 'burning the late-night oil too, huh.' };
-  }
-
   var commands = {
     help: function () {
-      print('available: whoami, about, projects, certifications, skills, contact, resume, github, linkedin, theme, date, clear');
+      print('available: whoami, about, projects, certifications, skills, contact, resume, github, linkedin, theme, date, history, clear');
     },
     whoami: function () {
-      var ctx = getTimeContext();
       print('B.Tech CSE student at NIST University, building in Python, AI, and full-stack web. Currently 3rd semester.');
-      print(ctx.note + ' (visiting during my ' + ctx.period + ', looks like)', 'tw-dim');
     },
     about: function () {
       var el = document.getElementById('about');
@@ -386,14 +360,39 @@ function renderCerts(items) {
       print('theme switched.');
     },
     date: function () { print(new Date().toString()); },
+    history: function () {
+      if (!cmdHistory.length) { print('no history yet.'); return; }
+      print(cmdHistory.map(function (c, i) { return (i + 1) + '  ' + c; }).join('<br>'));
+    },
     clear: function () { body.innerHTML = ''; },
     sudo: function () { print("Permission denied: you're not root here — nice try though."); }
   };
+
+  // ---------- persistent command history (survives across visits) ----------
+  var HISTORY_KEY = 'tw_history';
+  var cmdHistory = [];
+  try { cmdHistory = JSON.parse(localStorage.getItem(HISTORY_KEY)) || []; } catch (e) { cmdHistory = []; }
+  var historyIndex = cmdHistory.length;
+
+  function saveHistory() {
+    try { localStorage.setItem(HISTORY_KEY, JSON.stringify(cmdHistory.slice(-50))); } catch (e) {}
+  }
+
+  input.addEventListener('input', function () {
+    historyIndex = cmdHistory.length; // any manual typing resets browsing position
+  });
 
   function runCommand() {
     var raw = input.value.trim();
     if (!raw) { input.focus(); return; }
     print('<span class="tw-prompt-inline">$</span> ' + raw.replace(/</g, '&lt;'), 'tw-cmdline');
+
+    if (cmdHistory[cmdHistory.length - 1] !== raw) {
+      cmdHistory.push(raw);
+      saveHistory();
+    }
+    historyIndex = cmdHistory.length;
+
     var cmd = raw.toLowerCase();
     if (commands[cmd]) {
       commands[cmd]();
@@ -404,10 +403,54 @@ function renderCerts(items) {
     input.focus();
   }
 
+  // ---------- tab-completion ----------
+  function tryComplete() {
+    var partial = input.value.trim().toLowerCase();
+    if (!partial) return;
+    var names = Object.keys(commands);
+    var matches = names.filter(function (n) { return n.indexOf(partial) === 0; });
+    if (matches.length === 1) {
+      input.value = matches[0];
+    } else if (matches.length > 1) {
+      print('<span class="tw-prompt-inline">$</span> ' + partial.replace(/</g, '&lt;'), 'tw-cmdline');
+      print(matches.join('   '));
+    }
+  }
+
   input.addEventListener('keydown', function (e) {
-    if (e.key !== 'Enter') return;
-    e.preventDefault();
-    runCommand();
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      runCommand();
+      return;
+    }
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      tryComplete();
+      return;
+    }
+    if (e.key === 'ArrowUp') {
+      if (!cmdHistory.length) return;
+      e.preventDefault();
+      if (historyIndex > 0) historyIndex--;
+      input.value = cmdHistory[historyIndex] || '';
+      var len = input.value.length;
+      input.setSelectionRange(len, len);
+      return;
+    }
+    if (e.key === 'ArrowDown') {
+      if (!cmdHistory.length) return;
+      e.preventDefault();
+      if (historyIndex < cmdHistory.length - 1) {
+        historyIndex++;
+        input.value = cmdHistory[historyIndex];
+      } else {
+        historyIndex = cmdHistory.length;
+        input.value = '';
+      }
+      var len2 = input.value.length;
+      input.setSelectionRange(len2, len2);
+      return;
+    }
   });
   if (runButton) runButton.addEventListener('click', runCommand);
 })();
