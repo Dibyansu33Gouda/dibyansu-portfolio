@@ -320,7 +320,7 @@ function renderCerts(items) {
   function escapeHtml(value) {
     return String(value || '').replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[c]; });
   }
-  function dayKey(date) { return date.toISOString().slice(0, 10); }
+  function dayKey(date) { return date.getUTCFullYear() + '-' + String(date.getUTCMonth() + 1).padStart(2, '0') + '-' + String(date.getUTCDate()).padStart(2, '0'); }
   function formatDate(value) { return new Date(value + 'T00:00:00').toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }); }
   function render(data) {
     var solved = Number(data.solved || 0);
@@ -331,13 +331,13 @@ function renderCerts(items) {
 
     var activity = {};
     (data.activity || []).forEach(function (entry) { activity[entry.date] = entry; });
-    var now = new Date(); now.setHours(0, 0, 0, 0);
-    var start = new Date(now); start.setDate(start.getDate() - 181 - start.getDay());
+    var now = new Date(); now.setUTCHours(0, 0, 0, 0);
+    var start = new Date(now); start.setUTCDate(start.getUTCDate() - 357 - start.getUTCDay());
     var monthLabels = []; var lastMonth = -1;
-    for (var i = 0; i < 182; i++) {
-      var date = new Date(start); date.setDate(start.getDate() + i);
-      if (date.getMonth() !== lastMonth && date.getDay() === 0) { monthLabels.push('<span>' + date.toLocaleDateString('en-IN', { month: 'short' }) + '</span>'); lastMonth = date.getMonth(); }
-      else if (date.getDay() === 0) monthLabels.push('<span></span>');
+    for (var i = 0; i < 364; i++) {
+      var date = new Date(start); date.setUTCDate(start.getUTCDate() + i);
+      if (date.getUTCMonth() !== lastMonth && date.getUTCDay() === 0) { monthLabels.push('<span>' + date.toLocaleDateString('en-IN', { month: 'short', timeZone: 'UTC' }) + '</span>'); lastMonth = date.getUTCMonth(); }
+      else if (date.getUTCDay() === 0) monthLabels.push('<span></span>');
       var key = dayKey(date); var entry = activity[key]; var count = entry ? Number(entry.count || (entry.problems || []).length || 1) : 0;
       var level = count >= 4 ? 4 : count;
       var cell = document.createElement('button');
