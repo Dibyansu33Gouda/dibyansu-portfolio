@@ -313,6 +313,19 @@ function renderCerts(items) {
   var runButton = document.getElementById('twRun');
   if (!input || !body) return;
 
+  // swap the static "Welcome" line for a time-aware one, if the greeting is still untouched
+  (function greetByTime() {
+    var firstLine = body.querySelector('.tw-line');
+    if (!firstLine) return;
+    var hour = new Date().getHours();
+    if (hour >= 0 && hour < 5) {
+      firstLine.innerHTML = "Still up? Same. It's past midnight here too — type <span class=\"tw-cmd\">help</span> to see what this does.";
+    } else if (hour >= 5 && hour < 8) {
+      firstLine.innerHTML = 'Early riser. Type <span class="tw-cmd">help</span> to see what this does.';
+    }
+    // daytime hours keep the original default markup already in the HTML
+  })();
+
   function print(html, cls) {
     var div = document.createElement('div');
     div.className = 'tw-line ' + (cls || 'tw-out');
@@ -326,12 +339,25 @@ function renderCerts(items) {
     setTimeout(function () { location.href = url; }, 350);
   }
 
+  // ---------- time-of-day awareness: real local clock, not a fixed trigger ----------
+  function getTimeContext() {
+    var h = new Date().getHours();
+    if (h >= 0 && h < 5)  return { period: 'late night',    note: "it's past midnight here — still up, still shipping." };
+    if (h >= 5 && h < 8)  return { period: 'early morning', note: 'early start. respect.' };
+    if (h >= 8 && h < 12) return { period: 'morning',       note: 'good morning.' };
+    if (h >= 12 && h < 17) return { period: 'afternoon',    note: 'good afternoon.' };
+    if (h >= 17 && h < 21) return { period: 'evening',      note: 'good evening.' };
+    return { period: 'night', note: 'burning the late-night oil too, huh.' };
+  }
+
   var commands = {
     help: function () {
       print('available: whoami, about, projects, certifications, skills, contact, resume, github, linkedin, theme, date, clear');
     },
     whoami: function () {
+      var ctx = getTimeContext();
       print('B.Tech CSE student at NIST University, building in Python, AI, and full-stack web. Currently 3rd semester.');
+      print(ctx.note + ' (visiting during my ' + ctx.period + ', looks like)', 'tw-dim');
     },
     about: function () {
       var el = document.getElementById('about');

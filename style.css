@@ -117,6 +117,7 @@ body::before {
 }
 .tw-line { margin-bottom: 6px; word-break: break-word; }
 .tw-out { color: var(--text-dim); }
+.tw-dim { color: var(--text-faint); font-style: italic; }
 .tw-cmdline { color: var(--text); }
 .tw-err { color: var(--danger); }
 .tw-cmd { color: var(--accent); }
