@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DSA Progress — Dibyansu Gouda</title>
+<meta name="description" content="Dibyansu Gouda's problem-solving progress while following Striver's A2Z DSA Sheet.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="canonical" href="https://dibyansu33gouda.github.io/dibyansu-portfolio/dsa-progress.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<div class="termbar"><div class="termbar-inner">
+  <div class="termbar-left"><div class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div><span class="termbar-title">dibyansu@portfolio:~/dsa-progress</span></div>
+  <div class="termbar-right"><nav class="termnav" id="termnav" aria-label="Primary">
+    <a href="home.html"><span class="idx">01</span>home</a><a href="projects.html"><span class="idx">02</span>projects</a><a href="certifications.html"><span class="idx">03</span>certifications</a><a href="skills.html"><span class="idx">04</span>skills</a><a href="dsa-progress.html" class="active"><span class="idx">05</span>dsa</a><a href="contact.html"><span class="idx">06</span>contact</a>
+  </nav><button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" aria-label="Switch theme"><span>dark</span></button><button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="termnav">☰</button></div>
+</div></div>
+<main id="main" class="wrap">
+  <section class="page-section" style="border-bottom:1px solid var(--border);">
+    <div class="sec-head"><span class="cmd">$ ./track-progress</span><h1>dsa-progress/</h1></div>
+    <p class="sec-lede">A live record of my problem-solving practice while following <strong>Striver's A2Z DSA Sheet</strong>. The tracker is generated from my solutions log—no made-up skill percentages.</p>
+    <div class="dsa-summary reveal" id="dsaSummary" aria-live="polite"><p class="dsa-loading">Loading tracker…</p></div>
+  </section>
+  <section class="page-section" style="border-bottom:1px solid var(--border);">
+    <div class="sec-head"><span class="cmd">$ git log --dsa</span><h2>consistency/</h2></div>
+    <p class="sec-lede">Each filled square represents at least one logged problem. Click a day to see what was solved.</p>
+    <div class="dsa-heatmap-wrap reveal"><div class="dsa-months" id="dsaMonths"></div><div class="dsa-heatmap" id="dsaHeatmap" aria-label="DSA problem-solving activity for the last 26 weeks"></div><div class="dsa-legend"><span>less</span><i></i><i></i><i></i><i></i><span>more</span></div></div>
+    <div class="dsa-day-detail" id="dsaDayDetail">Select an active day to view the problems solved.</div>
+  </section>
+  <section class="page-section">
+    <div class="sec-head"><span class="cmd">$ ls solutions/</span><h2>recent-solves/</h2></div>
+    <div class="dsa-recent reveal" id="dsaRecent"></div>
+    <p class="dsa-links"><a href="https://leetcode.com/u/dibyansu_44/" target="_blank" rel="noopener">LeetCode profile ↗</a><a href="https://takeuforward.org/profile/dibyansu_44" target="_blank" rel="noopener">Striver profile ↗</a><a id="solutionsLink" href="#" hidden target="_blank" rel="noopener">view all solutions ↗</a></p>
+  </section>
+</main>
+<footer data-footer-date>built by dibyansu — last commit {{DATE}}</footer>
+<script src="script.js"></script>
+</body>
+</html>

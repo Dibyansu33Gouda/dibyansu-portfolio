@@ -134,6 +134,7 @@ function iconSvg(name, className) {
     { label: 'View projects', hint: 'projects.html', icon: 'projects', run: function () { location.href = 'projects.html'; } },
     { label: 'View certifications', hint: 'certifications.html', icon: 'certifications', run: function () { location.href = 'certifications.html'; } },
     { label: 'View skills', hint: 'skills.html', icon: 'skills', run: function () { location.href = 'skills.html'; } },
+    { label: 'View DSA progress', hint: 'dsa-progress.html', icon: 'projects', run: function () { location.href = 'dsa-progress.html'; } },
     { label: 'Contact Dibyansu', hint: 'contact.html', icon: 'contact', run: function () { location.href = 'contact.html'; } },
     { label: 'Download resume', hint: 'PDF', icon: 'external', run: function () { window.open(resumeUrl, '_blank', 'noopener'); } },
     { label: 'Open GitHub', hint: 'github.com', icon: 'external', run: function () { window.open('https://github.com/Dibyansu33Gouda', '_blank', 'noopener'); } }
@@ -306,6 +307,55 @@ function renderCerts(items) {
   }).join('');
   observeReveals();
 }
+
+// ---------- DSA tracker (data generated from the solutions repository) ----------
+(function () {
+  var summary = document.getElementById('dsaSummary');
+  if (!summary) return;
+  var heatmap = document.getElementById('dsaHeatmap');
+  var months = document.getElementById('dsaMonths');
+  var detail = document.getElementById('dsaDayDetail');
+  var recentRoot = document.getElementById('dsaRecent');
+
+  function escapeHtml(value) {
+    return String(value || '').replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[c]; });
+  }
+  function dayKey(date) { return date.toISOString().slice(0, 10); }
+  function formatDate(value) { return new Date(value + 'T00:00:00').toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }); }
+  function render(data) {
+    var solved = Number(data.solved || 0);
+    var streak = Number(data.currentStreak || 0);
+    var longest = Number(data.longestStreak || 0);
+    var updated = data.updatedAt ? 'Last synced ' + new Date(data.updatedAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : 'Sync starts after the first solution is logged.';
+    summary.innerHTML = '<div class="dsa-stat"><strong>' + solved + '</strong><span>problems solved</span></div><div class="dsa-stat"><strong>' + streak + '</strong><span>current streak</span></div><div class="dsa-stat"><strong>' + longest + '</strong><span>longest streak</span></div><div class="dsa-roadmap"><span>roadmap</span><strong>' + escapeHtml(data.roadmap || "Striver's A2Z DSA Sheet") + '</strong><small>' + updated + '</small></div>';
+
+    var activity = {};
+    (data.activity || []).forEach(function (entry) { activity[entry.date] = entry; });
+    var now = new Date(); now.setHours(0, 0, 0, 0);
+    var start = new Date(now); start.setDate(start.getDate() - 181 - start.getDay());
+    var monthLabels = []; var lastMonth = -1;
+    for (var i = 0; i < 182; i++) {
+      var date = new Date(start); date.setDate(start.getDate() + i);
+      if (date.getMonth() !== lastMonth && date.getDay() === 0) { monthLabels.push('<span>' + date.toLocaleDateString('en-IN', { month: 'short' }) + '</span>'); lastMonth = date.getMonth(); }
+      else if (date.getDay() === 0) monthLabels.push('<span></span>');
+      var key = dayKey(date); var entry = activity[key]; var count = entry ? Number(entry.count || (entry.problems || []).length || 1) : 0;
+      var level = count >= 4 ? 4 : count;
+      var cell = document.createElement('button');
+      cell.type = 'button'; cell.className = 'dsa-cell level-' + level; cell.setAttribute('aria-label', formatDate(key) + ': ' + count + ' problem' + (count === 1 ? '' : 's'));
+      cell.title = formatDate(key) + ' — ' + count + ' problem' + (count === 1 ? '' : 's');
+      cell.addEventListener('click', (function (day, item) { return function () {
+        var problems = item && item.problems && item.problems.length ? item.problems.map(function (p) { return p.url ? '<a href="' + escapeHtml(p.url) + '" target="_blank" rel="noopener">' + escapeHtml(p.name) + ' ↗</a>' : escapeHtml(p.name); }).join(', ') : 'No individual solutions recorded for this day yet.';
+        detail.innerHTML = '<strong>' + formatDate(day) + '</strong><span>' + problems + '</span>';
+      }; })(key, entry));
+      heatmap.appendChild(cell);
+    }
+    months.innerHTML = monthLabels.join('');
+    var recent = data.recent || [];
+    recentRoot.innerHTML = recent.length ? recent.map(function (p) { return '<article class="dsa-solve"><time>' + formatDate(p.date) + '</time><div><strong>' + escapeHtml(p.name) + '</strong><span>' + escapeHtml(p.topic || 'DSA') + (p.difficulty ? ' · ' + escapeHtml(p.difficulty) : '') + '</span></div>' + (p.url ? '<a href="' + escapeHtml(p.url) + '" target="_blank" rel="noopener">solution ↗</a>' : '') + '</article>'; }).join('') : '<p class="dsa-empty">Your recently solved problems will appear here after the first sync.</p>';
+    if (data.profiles && data.profiles.solutions) { var link = document.getElementById('solutionsLink'); link.href = data.profiles.solutions; link.hidden = false; }
+  }
+  fetch('data/dsa-progress.json', { cache: 'no-store' }).then(function (res) { if (!res.ok) throw new Error('Tracker data unavailable'); return res.json(); }).then(render).catch(function () { summary.innerHTML = '<p class="dsa-empty">The DSA tracker is being prepared. See my <a href="https://leetcode.com/u/dibyansu_44/" target="_blank" rel="noopener">LeetCode profile</a> in the meantime.</p>'; });
+})();
 // ---------- functional terminal widget (home page) ----------
 (function () {
   var input = document.getElementById('twInput');
@@ -328,7 +378,7 @@ function renderCerts(items) {
 
   var commands = {
     help: function () {
-      print('available: whoami, about, projects, certifications, skills, contact, resume, github, linkedin, theme, date, history, clear');
+      print('available: whoami, about, projects, certifications, skills, dsa, contact, resume, github, linkedin, theme, date, history, clear');
     },
     whoami: function () {
       print('B.Tech CSE student at NIST University, building in Python, AI, and full-stack web. Currently 3rd semester.');
@@ -341,6 +391,8 @@ function renderCerts(items) {
     certifications: function () { go('certifications.html', 'certifications'); },
     certs: function () { commands.certifications(); },
     skills: function () { go('skills.html', 'skills'); },
+    dsa: function () { go('dsa-progress.html', 'dsa progress'); },
+    'dsa-progress': function () { commands.dsa(); },
     contact: function () { go('contact.html', 'contact'); },
     home: function () { print('already home.'); },
     resume: function () {

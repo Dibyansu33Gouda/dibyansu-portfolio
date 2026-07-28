@@ -8,6 +8,7 @@ your current pixel-parade-311 site does.
 index.html            → deliberate entry page
 home.html             → main portfolio home (intro, photo, resume)
 projects.html          → project cards (text-first, no thumbnails)
+dsa-progress.html      → automatically synced DSA consistency tracker
 certifications.html    → certification cards
 skills.html             → skills grouped by category
 contact.html            → contact details + form
