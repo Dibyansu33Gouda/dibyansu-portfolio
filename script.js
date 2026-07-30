@@ -384,6 +384,9 @@ function renderCerts(items) {
     var api = 'https://api.github.com/repos/' + repo;
     return Promise.all([
       fetch(api + '/git/trees/HEAD?recursive=1').then(function (res) { if (!res.ok) throw new Error('Could not read solution files'); return res.json(); }),
+      // TODO: only the most recent 100 commits are fetched (no pagination). Fine for now,
+      // but once DSA_practice_Dib passes ~100 total commits, older activity will silently
+      // stop appearing in the heatmap/streak — add page-following (`?page=2`, etc.) then.
       fetch(api + '/commits?per_page=100').then(function (res) { if (!res.ok) throw new Error('Could not read solution commits'); return res.json(); })
     ]).then(function (result) {
       var tree = result[0].tree || [];
@@ -426,7 +429,23 @@ function renderCerts(items) {
       };
     });
   }
-  liveGitHubData().then(render).catch(function () {
+  var CACHE_KEY = 'dsa_tracker_cache_v1';
+  var CACHE_MS = 45 * 60 * 1000; // 45 minutes — commit activity doesn't need to be second-fresh
+
+  function cachedLiveGitHubData() {
+    try {
+      var cached = JSON.parse(localStorage.getItem(CACHE_KEY));
+      if (cached && cached.savedAt && (Date.now() - cached.savedAt) < CACHE_MS) {
+        return Promise.resolve(cached.data);
+      }
+    } catch (e) {}
+    return liveGitHubData().then(function (data) {
+      try { localStorage.setItem(CACHE_KEY, JSON.stringify({ savedAt: Date.now(), data: data })); } catch (e) {}
+      return data;
+    });
+  }
+
+  cachedLiveGitHubData().then(render).catch(function () {
     return fetch('data/dsa-progress.json', { cache: 'no-store' }).then(function (res) { if (!res.ok) throw new Error('Tracker data unavailable'); return res.json(); }).then(render);
   }).catch(function () { summary.innerHTML = '<p class="dsa-empty">The DSA tracker is temporarily unavailable. See my <a href="https://github.com/Dibyansu33Gouda/DSA_practice_Dib" target="_blank" rel="noopener">solutions repository</a> in the meantime.</p>'; });
 })();
