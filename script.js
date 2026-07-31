@@ -313,7 +313,6 @@ function renderCerts(items) {
   var summary = document.getElementById('dsaSummary');
   if (!summary) return;
   var heatmap = document.getElementById('dsaHeatmap');
-  var months = document.getElementById('dsaMonths');
   var detail = document.getElementById('dsaDayDetail');
   var recentRoot = document.getElementById('dsaRecent');
 
@@ -331,48 +330,55 @@ function renderCerts(items) {
 
     var activity = {};
     (data.activity || []).forEach(function (entry) { activity[entry.date] = entry; });
-    // Calendar-year chart: always Jan 1 to Dec 31, padded to complete weeks
-    // so every square remains aligned to its real weekday.
-    var chartYear = new Date().getUTCFullYear();
-    var firstDay = new Date(Date.UTC(chartYear, 0, 1));
-    var lastDay = new Date(Date.UTC(chartYear, 11, 31));
-    var start = new Date(firstDay); start.setUTCDate(start.getUTCDate() - start.getUTCDay());
-    var end = new Date(lastDay); end.setUTCDate(end.getUTCDate() + (6 - end.getUTCDay()));
-    var dayCount = Math.round((end - start) / 86400000) + 1;
-    var weekCount = dayCount / 7;
-    var gridWidth = (weekCount * 11 + (weekCount - 1) * 3) + 'px';
-    var chartWrap = heatmap.parentElement;
-    chartWrap.style.setProperty('--dsa-weeks', weekCount);
-    chartWrap.style.setProperty('--dsa-grid-width', gridWidth);
-    heatmap.innerHTML = '';
-    var monthLabels = Array(weekCount).fill('');
-    for (var month = 0; month < 12; month++) {
-      var monthStart = new Date(Date.UTC(chartYear, month, 1));
-      var column = Math.floor((monthStart - start) / 86400000 / 7);
-      monthLabels[column] = monthStart.toLocaleDateString('en-IN', { month: 'short', timeZone: 'UTC' });
-    }
-    for (var i = 0; i < dayCount; i++) {
-      var date = new Date(start); date.setUTCDate(start.getUTCDate() + i);
-      var isInYear = date >= firstDay && date <= lastDay;
-      if (!isInYear) {
-        var blank = document.createElement('span');
-        blank.className = 'dsa-cell dsa-cell-empty';
-        blank.setAttribute('aria-hidden', 'true');
-        heatmap.appendChild(blank);
-        continue;
-      }
-      var key = dayKey(date); var entry = activity[key]; var count = entry ? Number(entry.count || (entry.problems || []).length || 1) : 0;
+
+    function cellFor(key, entry) {
+      var count = entry ? Number(entry.count || (entry.problems || []).length || 1) : 0;
       var level = count >= 4 ? 4 : count;
       var cell = document.createElement('button');
       cell.type = 'button'; cell.className = 'dsa-cell level-' + level; cell.setAttribute('aria-label', formatDate(key) + ': ' + count + ' problem' + (count === 1 ? '' : 's'));
       cell.title = formatDate(key) + ' — ' + count + ' problem' + (count === 1 ? '' : 's');
-      cell.addEventListener('click', (function (day, item) { return function () {
-        var problems = item && item.problems && item.problems.length ? item.problems.map(function (p) { return p.url ? '<a href="' + escapeHtml(p.url) + '" target="_blank" rel="noopener">' + escapeHtml(p.name) + ' ↗</a>' : escapeHtml(p.name); }).join(', ') : 'No individual solutions recorded for this day yet.';
-        detail.innerHTML = '<strong>' + formatDate(day) + '</strong><span>' + problems + '</span>';
-      }; })(key, entry));
-      heatmap.appendChild(cell);
+      cell.addEventListener('click', function () {
+        var problems = entry && entry.problems && entry.problems.length ? entry.problems.map(function (p) { return p.url ? '<a href="' + escapeHtml(p.url) + '" target="_blank" rel="noopener">' + escapeHtml(p.name) + ' ↗</a>' : escapeHtml(p.name); }).join(', ') : 'No individual solutions recorded for this day yet.';
+        detail.innerHTML = '<strong>' + formatDate(key) + '</strong><span>' + problems + '</span>';
+      });
+      return cell;
     }
-    months.innerHTML = monthLabels.map(function (label) { return '<span>' + label + '</span>'; }).join('');
+
+    // Calendar-year chart, one independent grid per month — LeetCode-style,
+    // not a single continuous GitHub-style week grid. Each month pads only
+    // its leading days (to align day 1 to the correct weekday column); the
+    // last week of a month is left as a partial column, same as LeetCode.
+    var chartYear = new Date().getUTCFullYear();
+    heatmap.innerHTML = '';
+    for (var m = 0; m < 12; m++) {
+      var monthStart = new Date(Date.UTC(chartYear, m, 1));
+      var monthEnd = new Date(Date.UTC(chartYear, m + 1, 0));
+      var leadingBlanks = monthStart.getUTCDay(); // 0=Sun .. 6=Sat
+
+      var block = document.createElement('div');
+      block.className = 'dsa-month-block';
+      var label = document.createElement('div');
+      label.className = 'dsa-month-label';
+      label.textContent = monthStart.toLocaleDateString('en-IN', { month: 'short', timeZone: 'UTC' });
+      var grid = document.createElement('div');
+      grid.className = 'dsa-month-grid';
+
+      for (var b = 0; b < leadingBlanks; b++) {
+        var blank = document.createElement('span');
+        blank.className = 'dsa-cell dsa-cell-empty';
+        blank.setAttribute('aria-hidden', 'true');
+        grid.appendChild(blank);
+      }
+      for (var d = monthStart; d <= monthEnd; d.setUTCDate(d.getUTCDate() + 1)) {
+        var key = dayKey(d);
+        grid.appendChild(cellFor(key, activity[key]));
+      }
+
+      block.appendChild(label);
+      block.appendChild(grid);
+      heatmap.appendChild(block);
+    }
+
     var recent = data.recent || [];
     recentRoot.innerHTML = recent.length ? recent.map(function (p) { return '<article class="dsa-solve"><time>' + formatDate(p.date) + '</time><div><strong>' + escapeHtml(p.name) + '</strong><span>' + escapeHtml(p.topic || 'DSA') + (p.difficulty ? ' · ' + escapeHtml(p.difficulty) : '') + '</span></div>' + (p.url ? '<a href="' + escapeHtml(p.url) + '" target="_blank" rel="noopener">solution ↗</a>' : '') + '</article>'; }).join('') : '<p class="dsa-empty">Your recently solved problems will appear here after the first sync.</p>';
     if (data.profiles && data.profiles.solutions) { var link = document.getElementById('solutionsLink'); link.href = data.profiles.solutions; link.hidden = false; }
