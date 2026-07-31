@@ -1,15 +1,85 @@
 {
-  "updatedAt": null,
+  "updatedAt": "2026-07-31T06:23:02.497Z",
   "roadmap": "Striver's A2Z DSA Sheet",
   "profiles": {
     "leetcode": "https://leetcode.com/u/dibyansu_44/",
     "takeUForward": "https://takeuforward.org/profile/dibyansu_44",
     "solutions": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib"
   },
-  "solved": 0,
-  "currentStreak": 0,
-  "longestStreak": 0,
+  "solved": 4,
+  "currentStreak": 1,
+  "longestStreak": 1,
   "topics": [],
-  "activity": [],
-  "recent": []
+  "activity": [
+    {
+      "date": "2026-07-28",
+      "count": 2,
+      "problems": [
+        {
+          "name": "Implement function to add two numbers from lists",
+          "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/3c792157bee09d4381ecc80643258172900b755e"
+        },
+        {
+          "name": "Add recursive implementation of atoi function",
+          "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/c64d1e0923410655c4d15ee797e89829473ed172"
+        }
+      ]
+    },
+    {
+      "date": "2026-07-15",
+      "count": 2,
+      "problems": [
+        {
+          "name": "Add method to delete all the occurrence of a number",
+          "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/106c1590502ba6b40dc3d7527f63d2f2063735b0"
+        },
+        {
+          "name": "Add function to delete all occurrences in DLL..",
+          "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/6cae1631ba3ed6d544c9236ef7a0f8bcb293646f"
+        }
+      ]
+    },
+    {
+      "date": "2026-07-13",
+      "count": 1,
+      "problems": [
+        {
+          "name": "Initial commit",
+          "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/5863fc85b868cd475c8fee32b157efaf9944e799"
+        }
+      ]
+    }
+  ],
+  "recent": [
+    {
+      "date": "2026-07-28",
+      "name": "Implement function to add two numbers from lists",
+      "topic": "DSA practice",
+      "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/3c792157bee09d4381ecc80643258172900b755e"
+    },
+    {
+      "date": "2026-07-28",
+      "name": "Add recursive implementation of atoi function",
+      "topic": "DSA practice",
+      "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/c64d1e0923410655c4d15ee797e89829473ed172"
+    },
+    {
+      "date": "2026-07-15",
+      "name": "Add method to delete all the occurrence of a number",
+      "topic": "DSA practice",
+      "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/106c1590502ba6b40dc3d7527f63d2f2063735b0"
+    },
+    {
+      "date": "2026-07-15",
+      "name": "Add function to delete all occurrences in DLL..",
+      "topic": "DSA practice",
+      "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/6cae1631ba3ed6d544c9236ef7a0f8bcb293646f"
+    },
+    {
+      "date": "2026-07-13",
+      "name": "Initial commit",
+      "topic": "DSA practice",
+      "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/5863fc85b868cd475c8fee32b157efaf9944e799"
+    }
+  ]
 }
