@@ -143,7 +143,7 @@ function iconSvg(name, className) {
   var filtered = commands;
   var palette = document.createElement('div');
   palette.className = 'command-palette';
-  palette.innerHTML = '<div class="palette-dialog" role="dialog" aria-modal="true" aria-label="Command palette"><label class="palette-search"><span aria-hidden="true">$</span><input type="text" autocomplete="off" placeholder="type a command..." aria-label="Search commands"></label><div class="palette-results" role="listbox"></div><div class="palette-footer"><span><kbd>↑↓</kbd> navigate</span><span><kbd>Enter</kbd> select</span><span><kbd>Esc</kbd> close</span></div></div>';
+  palette.innerHTML = '<div class="palette-dialog" role="dialog" aria-modal="true" aria-label="Command palette"><label class="palette-search"><span aria-hidden="true">$</span><input type="text" id="paletteSearchInput" name="paletteSearch" autocomplete="off" placeholder="type a command..." aria-label="Search commands"></label><div class="palette-results" role="listbox"></div><div class="palette-footer"><span><kbd>↑↓</kbd> navigate</span><span><kbd>Enter</kbd> select</span><span><kbd>Esc</kbd> close</span></div></div>';
   document.body.appendChild(palette);
   var input = palette.querySelector('input');
   var results = palette.querySelector('.palette-results');
