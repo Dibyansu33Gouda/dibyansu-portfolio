@@ -1,16 +1,26 @@
 {
-  "updatedAt": "2026-08-04T06:03:54.194Z",
+  "updatedAt": "2026-08-05T06:02:12.060Z",
   "roadmap": "Striver's A2Z DSA Sheet",
   "profiles": {
     "leetcode": "https://leetcode.com/u/dibyansu_44/",
     "takeUForward": "https://takeuforward.org/profile/dibyansu_44",
     "solutions": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib"
   },
-  "solved": 5,
-  "currentStreak": 1,
-  "longestStreak": 1,
+  "solved": 6,
+  "currentStreak": 2,
+  "longestStreak": 2,
   "topics": [],
   "activity": [
+    {
+      "date": "2026-08-04",
+      "count": 1,
+      "problems": [
+        {
+          "name": "counting sort algorithm using python",
+          "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/b9dbbff522cc3a5496d3ad6dbdf2a5f647d2a4da"
+        }
+      ]
+    },
     {
       "date": "2026-08-03",
       "count": 1,
@@ -62,6 +72,12 @@
   ],
   "recent": [
     {
+      "date": "2026-08-04",
+      "name": "counting sort algorithm using python",
+      "topic": "DSA practice",
+      "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/b9dbbff522cc3a5496d3ad6dbdf2a5f647d2a4da"
+    },
+    {
       "date": "2026-08-03",
       "name": "heapify up",
       "topic": "DSA practice",
@@ -90,12 +106,6 @@
       "name": "Add function to delete all occurrences in DLL..",
       "topic": "DSA practice",
       "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/6cae1631ba3ed6d544c9236ef7a0f8bcb293646f"
-    },
-    {
-      "date": "2026-07-13",
-      "name": "Initial commit",
-      "topic": "DSA practice",
-      "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/5863fc85b868cd475c8fee32b157efaf9944e799"
     }
   ]
 }
