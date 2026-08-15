@@ -82,6 +82,25 @@ HTML. Certification thumbnails are real first-page renders of the actual
 uploaded PDFs (generated once via `pdftoppm`, not AI-generated or stock
 images).
 
+## AI chatbot
+
+A floating assistant, available on every page, that answers questions about
+Dibyansu directly and can redirect visitors to the relevant page:
+
+- **Frontend** — vanilla JS widget in `script.js`, no framework, matches the
+  site's zero-dependency philosophy
+- **Backend** — separate FastAPI service (`chatbot-backend/`), deployed on
+  Render, calling the Gemini API (`gemini-flash-latest`)
+- **Conversation memory** — chat history persists across page navigation
+  within a session via `sessionStorage`, and full history is sent with each
+  request so Gemini has actual multi-turn context, not just the latest message
+- **Page-aware redirects** — the model can respond with a
+  `[REDIRECT: page.html]` directive, which the frontend catches and
+  navigates to automatically (e.g. asking about certifications sends you
+  straight to `certifications.html`)
+- API key lives server-side only (Render environment variable), never
+  exposed to the client
+
 ## Animation, done deliberately
 
 Every animation here is either functional or reacts to something real —
@@ -127,5 +146,8 @@ with a countdown back home — not a blank success page or a silent failure.
 
 ## Deployment
 
-GitHub Pages via Actions — `actions/checkout` → `upload-pages-artifact` →
-`deploy-pages`. No build step: the static files are the deployed output.
+- **Frontend** — GitHub Pages, deploying directly from the `main` branch
+  (no build step, the static files are the deployed output)
+- **Chatbot backend** — FastAPI service on Render's free tier, auto-deploys
+  on push to `main`. Note: free tier spins down after ~15 min idle, so the
+  first chatbot message after inactivity may take 30-60s to respond
