@@ -1,17 +1,19 @@
 import os
-import google.generativeai as genai
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from dotenv import load_dotenv
+from google import genai
+from google.genai import types
 
 # Load environment variables (API Key)
 load_dotenv()
 
-# Configure Gemini
+# Configure Gemini Client
 api_key = os.getenv("GEMINI_API_KEY")
+client = None
 if api_key:
-    genai.configure(api_key=api_key)
+    client = genai.Client(api_key=api_key)
 
 app = FastAPI(title="Dibyansu Portfolio Chatbot API")
 
@@ -41,12 +43,6 @@ Keep your answers concise, friendly, and formatted nicely. Do not use markdown t
 Whenever you want the frontend to automatically redirect the user, include the exact phrase: `[REDIRECT: /page.html]` in your response, where `/page.html` is the target page.
 """
 
-# Initialize the Gemini model
-model = genai.GenerativeModel(
-    model_name="gemini-1.5-flash",
-    system_instruction=SYSTEM_INSTRUCTION
-)
-
 class ChatRequest(BaseModel):
     message: str
 
@@ -55,12 +51,18 @@ class ChatResponse(BaseModel):
 
 @app.post("/api/chat", response_model=ChatResponse)
 async def chat_endpoint(request: ChatRequest):
-    if not api_key:
+    if not client:
         raise HTTPException(status_code=500, detail="API Key not configured on the server.")
     
     try:
-        # Generate the response using Gemini
-        response = model.generate_content(request.message)
+        # Generate the response using Gemini with the new genai SDK
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=request.message,
+            config=types.GenerateContentConfig(
+                system_instruction=SYSTEM_INSTRUCTION
+            )
+        )
         return ChatResponse(reply=response.text)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
