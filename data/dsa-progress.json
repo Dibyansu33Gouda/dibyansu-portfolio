@@ -1,16 +1,30 @@
 {
-  "updatedAt": "2026-08-14T05:01:17.156Z",
+  "updatedAt": "2026-08-15T03:53:38.586Z",
   "roadmap": "Striver's A2Z DSA Sheet",
   "profiles": {
     "leetcode": "https://leetcode.com/u/dibyansu_44/",
     "takeUForward": "https://takeuforward.org/profile/dibyansu_44",
     "solutions": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib"
   },
-  "solved": 6,
-  "currentStreak": 2,
+  "solved": 8,
+  "currentStreak": 1,
   "longestStreak": 2,
   "topics": [],
   "activity": [
+    {
+      "date": "2026-08-14",
+      "count": 2,
+      "problems": [
+        {
+          "name": "Implement next greater element function",
+          "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/c8ec92b8134f5f72eaccede1cea507af7896ff1d"
+        },
+        {
+          "name": "Implement binary search algorithm in binarysearch.py",
+          "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/0ead86699b68f0d01de1e8219ed38098b9e89faf"
+        }
+      ]
+    },
     {
       "date": "2026-08-04",
       "count": 1,
@@ -72,6 +86,18 @@
   ],
   "recent": [
     {
+      "date": "2026-08-14",
+      "name": "Implement next greater element function",
+      "topic": "DSA practice",
+      "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/c8ec92b8134f5f72eaccede1cea507af7896ff1d"
+    },
+    {
+      "date": "2026-08-14",
+      "name": "Implement binary search algorithm in binarysearch.py",
+      "topic": "DSA practice",
+      "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/0ead86699b68f0d01de1e8219ed38098b9e89faf"
+    },
+    {
       "date": "2026-08-04",
       "name": "counting sort algorithm using python",
       "topic": "DSA practice",
@@ -94,18 +120,6 @@
       "name": "Add recursive implementation of atoi function",
       "topic": "DSA practice",
       "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/c64d1e0923410655c4d15ee797e89829473ed172"
-    },
-    {
-      "date": "2026-07-15",
-      "name": "Add method to delete all the occurrence of a number",
-      "topic": "DSA practice",
-      "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/106c1590502ba6b40dc3d7527f63d2f2063735b0"
-    },
-    {
-      "date": "2026-07-15",
-      "name": "Add function to delete all occurrences in DLL..",
-      "topic": "DSA practice",
-      "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/6cae1631ba3ed6d544c9236ef7a0f8bcb293646f"
     }
   ]
 }
