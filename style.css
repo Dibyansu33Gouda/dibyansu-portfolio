@@ -259,7 +259,7 @@ a:hover { text-decoration: underline; }
 [data-theme="light"] .dot.g { background: #a9c4a0; }
 
 .termbar-title { font-family: var(--font-mono); font-size: 12px; color: var(--text-faint); letter-spacing: .02em; white-space: nowrap; }
-.termbar-left { display: flex; align-items: center; gap: 14px; min-width: 0; }
+.termbar-left { display: flex; align-items: center; gap: 14px; min-width: 0; margin-right: 12px; }
 .termbar-right { display: flex; align-items: center; gap: 18px; }
 
 .termnav { display: flex; gap: 18px; font-family: var(--font-mono); font-size: 13px; flex-wrap: wrap; }
