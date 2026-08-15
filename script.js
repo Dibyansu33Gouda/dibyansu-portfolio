@@ -777,7 +777,7 @@ function renderCerts(items) {
   var chatSendBtn = document.getElementById('chatSendBtn');
 
   // Change this to your backend URL once deployed (e.g. Render/Vercel URL)
-  var BACKEND_URL = "http://127.0.0.1:8000/api/chat";
+  var BACKEND_URL = "https://dibyansu-portfolio.onrender.com/api/chat";
 
   function toggleChat() {
     chatWindow.classList.toggle('open');
