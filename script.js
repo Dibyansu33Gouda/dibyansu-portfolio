@@ -388,12 +388,30 @@ function renderCerts(items) {
   function liveGitHubData() {
     var repo = 'Dibyansu33Gouda/DSA_practice_Dib';
     var api = 'https://api.github.com/repos/' + repo;
+
+    // Paginate through all commit pages (100 per page, up to 10 pages = 1000 commits safety cap)
+    function fetchAllCommits() {
+      var allCommits = [];
+      var MAX_PAGES = 10;
+
+      function fetchPage(page) {
+        return fetch(api + '/commits?per_page=100&page=' + page).then(function (res) {
+          if (!res.ok) throw new Error('Could not read solution commits');
+          return res.json().then(function (commits) {
+            if (!commits.length) return allCommits;               // no more pages
+            allCommits = allCommits.concat(commits);
+            if (commits.length < 100 || page >= MAX_PAGES) return allCommits;  // last page or safety cap
+            return fetchPage(page + 1);
+          });
+        });
+      }
+
+      return fetchPage(1);
+    }
+
     return Promise.all([
       fetch(api + '/git/trees/HEAD?recursive=1').then(function (res) { if (!res.ok) throw new Error('Could not read solution files'); return res.json(); }),
-      // TODO: only the most recent 100 commits are fetched (no pagination). Fine for now,
-      // but once DSA_practice_Dib passes ~100 total commits, older activity will silently
-      // stop appearing in the heatmap/streak — add page-following (`?page=2`, etc.) then.
-      fetch(api + '/commits?per_page=100').then(function (res) { if (!res.ok) throw new Error('Could not read solution commits'); return res.json(); })
+      fetchAllCommits()
     ]).then(function (result) {
       var tree = result[0].tree || [];
       var commits = result[1] || [];
@@ -776,8 +794,13 @@ function renderCerts(items) {
   var chatInput = document.getElementById('chatInput');
   var chatSendBtn = document.getElementById('chatSendBtn');
 
-  // Change this to your backend URL once deployed (e.g. Render/Vercel URL)
-  var BACKEND_URL = "https://dibyansu-portfolio.onrender.com/api/chat";
+  // Auto-detect environment: use deployed backend on GitHub Pages, localhost for local dev.
+  var BACKEND_URL = (function () {
+    var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
+    var PRODUCTION_URL = 'https://dibyansu-portfolio.onrender.com/api/chat';
+    var LOCAL_URL      = 'http://127.0.0.1:8000/api/chat';
+    return isLocal ? LOCAL_URL : PRODUCTION_URL;
+  })();
 
   function toggleChat() {
     chatWindow.classList.toggle('open');
@@ -826,7 +849,10 @@ function renderCerts(items) {
         // Handle automated redirects
         var redirectMatch = reply.match(/\[REDIRECT:\s*(.*?\.html)\]/);
         if (redirectMatch) {
-          var targetPage = redirectMatch[1];
+          // Strip leading slash so the path resolves relative to the current
+          // directory — this works on both GitHub Pages subpath deployments
+          // (e.g. dibyansu33gouda.github.io/dibyansu-portfolio/) and custom domains.
+          var targetPage = redirectMatch[1].replace(/^\/+/, '');
           reply = reply.replace(redirectMatch[0], '').trim();
           addMessage(reply || "Redirecting you now...", 'bot');
           setTimeout(() => {

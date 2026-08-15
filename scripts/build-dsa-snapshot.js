@@ -29,9 +29,18 @@ async function main() {
   if (!treeRes.ok) throw new Error('Could not read solution files: ' + treeRes.status);
   var tree = (await treeRes.json()).tree || [];
 
-  var commitsRes = await fetch(API + '/commits?per_page=100', { headers: headers() });
-  if (!commitsRes.ok) throw new Error('Could not read solution commits: ' + commitsRes.status);
-  var commits = await commitsRes.json();
+  // Paginate through all commit pages (100 per page, up to 10 pages = 1000 commits safety cap)
+  var allCommits = [];
+  var MAX_PAGES = 10;
+  for (var page = 1; page <= MAX_PAGES; page++) {
+    var commitsRes = await fetch(API + '/commits?per_page=100&page=' + page, { headers: headers() });
+    if (!commitsRes.ok) throw new Error('Could not read solution commits: ' + commitsRes.status);
+    var pageCommits = await commitsRes.json();
+    if (!pageCommits.length) break;           // no more pages
+    allCommits = allCommits.concat(pageCommits);
+    if (pageCommits.length < 100) break;      // last page
+  }
+  var commits = allCommits;
 
   var files = tree.filter(function (item) {
     var p = item.path.toLowerCase();
