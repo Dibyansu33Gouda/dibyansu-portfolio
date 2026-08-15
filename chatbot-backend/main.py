@@ -57,7 +57,7 @@ async def chat_endpoint(request: ChatRequest):
     try:
         # Generate the response using Gemini with the new genai SDK
         response = client.models.generate_content(
-            model="gemini-2.5-flash",
+            model="gemini-flash-latest", 
             contents=request.message,
             config=types.GenerateContentConfig(
                 system_instruction=SYSTEM_INSTRUCTION
