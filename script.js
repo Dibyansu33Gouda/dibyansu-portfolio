@@ -792,7 +792,15 @@ function renderCerts(items) {
   function addMessage(text, sender) {
     var msgDiv = document.createElement('div');
     msgDiv.className = 'chat-msg ' + sender;
-    msgDiv.textContent = text;
+    
+    // Convert **bold** markdown to real <strong> tags, then set as HTML
+    var safeText = text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    
+    msgDiv.innerHTML = safeText;
     chatBody.appendChild(msgDiv);
     chatBody.scrollTop = chatBody.scrollHeight;
   }
