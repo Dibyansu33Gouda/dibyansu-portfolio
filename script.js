@@ -745,3 +745,98 @@ function renderCerts(items) {
   f.textContent = 'built by dibyansu — last updated ' +
     new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' });
 })();
+
+// ---------- floating ai chatbot ----------
+(function () {
+  // Inject HTML for chat widget
+  var chatHTML = `
+    <div class="chat-widget-btn" id="chatBtn" aria-label="Open Chat">
+      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+    </div>
+    <div class="chat-window" id="chatWindow">
+      <div class="chat-header">
+        <span>AI Assistant</span>
+        <button id="chatCloseBtn">&times;</button>
+      </div>
+      <div class="chat-body" id="chatBody">
+        <div class="chat-msg bot">Hi! I'm Dibyansu's AI assistant. Ask me anything about his projects, skills, or experience!</div>
+      </div>
+      <div class="chat-input-area">
+        <input type="text" id="chatInput" placeholder="Type a message..." autocomplete="off">
+        <button id="chatSendBtn">Send</button>
+      </div>
+    </div>
+  `;
+  document.body.insertAdjacentHTML('beforeend', chatHTML);
+
+  var chatBtn = document.getElementById('chatBtn');
+  var chatWindow = document.getElementById('chatWindow');
+  var chatCloseBtn = document.getElementById('chatCloseBtn');
+  var chatBody = document.getElementById('chatBody');
+  var chatInput = document.getElementById('chatInput');
+  var chatSendBtn = document.getElementById('chatSendBtn');
+
+  // Change this to your backend URL once deployed (e.g. Render/Vercel URL)
+  var BACKEND_URL = "http://127.0.0.1:8000/api/chat";
+
+  function toggleChat() {
+    chatWindow.classList.toggle('open');
+    if (chatWindow.classList.contains('open')) {
+      chatInput.focus();
+    }
+  }
+  
+  chatBtn.addEventListener('click', toggleChat);
+  chatCloseBtn.addEventListener('click', toggleChat);
+
+  function addMessage(text, sender) {
+    var msgDiv = document.createElement('div');
+    msgDiv.className = 'chat-msg ' + sender;
+    msgDiv.textContent = text;
+    chatBody.appendChild(msgDiv);
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }
+
+  async function sendMessage() {
+    var text = chatInput.value.trim();
+    if (!text) return;
+    
+    addMessage(text, 'user');
+    chatInput.value = '';
+    
+    // Check if the server is available
+    try {
+      var res = await fetch(BACKEND_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: text })
+      });
+      if (res.ok) {
+        var data = await res.json();
+        var reply = data.reply;
+        
+        // Handle automated redirects
+        var redirectMatch = reply.match(/\[REDIRECT:\s*(.*?\.html)\]/);
+        if (redirectMatch) {
+          var targetPage = redirectMatch[1];
+          reply = reply.replace(redirectMatch[0], '').trim();
+          addMessage(reply || "Redirecting you now...", 'bot');
+          setTimeout(() => {
+            window.location.href = targetPage;
+          }, 1500);
+        } else {
+          addMessage(reply, 'bot');
+        }
+      } else {
+        addMessage("Oops! The AI backend seems to be offline.", 'bot');
+      }
+    } catch (e) {
+      addMessage("Error connecting to the AI backend. Please ensure the backend is running.", 'bot');
+    }
+  }
+
+  chatSendBtn.addEventListener('click', sendMessage);
+  chatInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') sendMessage();
+  });
+})();
