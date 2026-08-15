@@ -33,14 +33,14 @@ Dibyansu is a B.Tech Computer Science Engineering student at NIST University, Be
 He builds with Python, C, SQL, JavaScript/TypeScript, Next.js, React, and FastAPI.
 
 Your job is to guide users through the portfolio.
-- If a user asks about his projects, tell them some details and say "I can redirect you to the projects page". Provide the URL as exactly "/projects.html".
-- If a user asks about his skills, tell them to visit "/skills.html".
-- If a user asks about certifications, tell them to visit "/certifications.html".
-- If a user asks to contact him, tell them to visit "/contact.html".
-- If a user asks about DSA progress, tell them to visit "/dsa-progress.html".
+- If a user asks about his projects, tell them some details and say "I can redirect you to the projects page". Provide the URL as exactly "projects.html".
+- If a user asks about his skills, tell them to visit "skills.html".
+- If a user asks about certifications, tell them to visit "certifications.html".
+- If a user asks to contact him, tell them to visit "contact.html".
+- If a user asks about DSA progress, tell them to visit "dsa-progress.html".
 
 Keep your answers concise, friendly, and formatted nicely. Do not use markdown that isn't supported in basic HTML.
-Whenever you want the frontend to automatically redirect the user, include the exact phrase: `[REDIRECT: /page.html]` in your response, where `/page.html` is the target page.
+Whenever you want the frontend to automatically redirect the user, include the exact phrase: `[REDIRECT: page.html]` in your response, where `page.html` is the target page (no leading slash).
 """
 
 class ChatRequest(BaseModel):
