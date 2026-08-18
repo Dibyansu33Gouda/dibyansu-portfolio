@@ -1,16 +1,26 @@
 {
-  "updatedAt": "2026-08-17T04:01:43.529Z",
+  "updatedAt": "2026-08-18T03:57:19.811Z",
   "roadmap": "Striver's A2Z DSA Sheet",
   "profiles": {
     "leetcode": "https://leetcode.com/u/dibyansu_44/",
     "takeUForward": "https://takeuforward.org/profile/dibyansu_44",
     "solutions": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib"
   },
-  "solved": 8,
+  "solved": 9,
   "currentStreak": 1,
   "longestStreak": 2,
   "topics": [],
   "activity": [
+    {
+      "date": "2026-08-17",
+      "count": 1,
+      "problems": [
+        {
+          "name": "Add quicksort implementation in quicksort.py",
+          "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/64720148f13db9c1ce841384fe4dcaafc7e554fe"
+        }
+      ]
+    },
     {
       "date": "2026-08-14",
       "count": 2,
@@ -86,6 +96,12 @@
   ],
   "recent": [
     {
+      "date": "2026-08-17",
+      "name": "Add quicksort implementation in quicksort.py",
+      "topic": "DSA practice",
+      "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/64720148f13db9c1ce841384fe4dcaafc7e554fe"
+    },
+    {
       "date": "2026-08-14",
       "name": "Implement next greater element function",
       "topic": "DSA practice",
@@ -114,12 +130,6 @@
       "name": "Implement function to add two numbers from lists",
       "topic": "DSA practice",
       "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/3c792157bee09d4381ecc80643258172900b755e"
-    },
-    {
-      "date": "2026-07-28",
-      "name": "Add recursive implementation of atoi function",
-      "topic": "DSA practice",
-      "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/c64d1e0923410655c4d15ee797e89829473ed172"
     }
   ]
 }
