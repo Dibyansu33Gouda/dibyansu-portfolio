@@ -1,16 +1,26 @@
 {
-  "updatedAt": "2026-10-11T09:58:58.576Z",
+  "updatedAt": "2026-10-12T10:47:02.132Z",
   "roadmap": "Striver's A2Z DSA Sheet",
   "profiles": {
     "leetcode": "https://leetcode.com/u/dibyansu_44/",
     "takeUForward": "https://takeuforward.org/profile/dibyansu_44",
     "solutions": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib"
   },
-  "solved": 9,
+  "solved": 10,
   "currentStreak": 1,
   "longestStreak": 2,
   "topics": [],
   "activity": [
+    {
+      "date": "2026-10-11",
+      "count": 1,
+      "problems": [
+        {
+          "name": "practiced fixed window problem",
+          "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/6ab520c66815e6c19c88e69030c7a4ff4bc59a17"
+        }
+      ]
+    },
     {
       "date": "2026-08-17",
       "count": 1,
@@ -96,6 +106,12 @@
   ],
   "recent": [
     {
+      "date": "2026-10-11",
+      "name": "practiced fixed window problem",
+      "topic": "DSA practice",
+      "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/6ab520c66815e6c19c88e69030c7a4ff4bc59a17"
+    },
+    {
       "date": "2026-08-17",
       "name": "Add quicksort implementation in quicksort.py",
       "topic": "DSA practice",
@@ -124,12 +140,6 @@
       "name": "heapify up",
       "topic": "DSA practice",
       "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/b6674f75822c8048fe5cae6be03635ef63125a84"
-    },
-    {
-      "date": "2026-07-28",
-      "name": "Implement function to add two numbers from lists",
-      "topic": "DSA practice",
-      "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/3c792157bee09d4381ecc80643258172900b755e"
     }
   ]
 }
