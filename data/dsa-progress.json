@@ -1,16 +1,30 @@
 {
-  "updatedAt": "2026-10-14T08:41:31.308Z",
+  "updatedAt": "2026-10-15T08:16:36.122Z",
   "roadmap": "Striver's A2Z DSA Sheet",
   "profiles": {
     "leetcode": "https://leetcode.com/u/dibyansu_44/",
     "takeUForward": "https://takeuforward.org/profile/dibyansu_44",
     "solutions": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib"
   },
-  "solved": 10,
+  "solved": 13,
   "currentStreak": 1,
   "longestStreak": 2,
   "topics": [],
   "activity": [
+    {
+      "date": "2026-10-14",
+      "count": 2,
+      "problems": [
+        {
+          "name": "two sum problem",
+          "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/51dce6596b33572575eacc12cb12d6367b2d4b0c"
+        },
+        {
+          "name": "dynamic sliding window and longest substring",
+          "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/e292c9f31ea3bce416dce30481a4a41e61ebd8f9"
+        }
+      ]
+    },
     {
       "date": "2026-10-11",
       "count": 1,
@@ -106,6 +120,18 @@
   ],
   "recent": [
     {
+      "date": "2026-10-14",
+      "name": "two sum problem",
+      "topic": "DSA practice",
+      "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/51dce6596b33572575eacc12cb12d6367b2d4b0c"
+    },
+    {
+      "date": "2026-10-14",
+      "name": "dynamic sliding window and longest substring",
+      "topic": "DSA practice",
+      "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/e292c9f31ea3bce416dce30481a4a41e61ebd8f9"
+    },
+    {
       "date": "2026-10-11",
       "name": "practiced fixed window problem",
       "topic": "DSA practice",
@@ -128,18 +154,6 @@
       "name": "Implement binary search algorithm in binarysearch.py",
       "topic": "DSA practice",
       "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/0ead86699b68f0d01de1e8219ed38098b9e89faf"
-    },
-    {
-      "date": "2026-08-04",
-      "name": "counting sort algorithm using python",
-      "topic": "DSA practice",
-      "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/b9dbbff522cc3a5496d3ad6dbdf2a5f647d2a4da"
-    },
-    {
-      "date": "2026-08-03",
-      "name": "heapify up",
-      "topic": "DSA practice",
-      "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/b6674f75822c8048fe5cae6be03635ef63125a84"
     }
   ]
 }
