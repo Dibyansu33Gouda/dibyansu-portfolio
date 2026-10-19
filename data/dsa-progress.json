@@ -1,16 +1,26 @@
 {
-  "updatedAt": "2026-10-18T08:00:36.759Z",
+  "updatedAt": "2026-10-19T08:50:39.771Z",
   "roadmap": "Striver's A2Z DSA Sheet",
   "profiles": {
     "leetcode": "https://leetcode.com/u/dibyansu_44/",
     "takeUForward": "https://takeuforward.org/profile/dibyansu_44",
     "solutions": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib"
   },
-  "solved": 13,
+  "solved": 14,
   "currentStreak": 1,
   "longestStreak": 2,
   "topics": [],
   "activity": [
+    {
+      "date": "2026-10-18",
+      "count": 1,
+      "problems": [
+        {
+          "name": "next greater element using monotonic stack",
+          "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/18baebcbf686b74831645178a8785c200f479841"
+        }
+      ]
+    },
     {
       "date": "2026-10-14",
       "count": 2,
@@ -120,6 +130,12 @@
   ],
   "recent": [
     {
+      "date": "2026-10-18",
+      "name": "next greater element using monotonic stack",
+      "topic": "DSA practice",
+      "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/18baebcbf686b74831645178a8785c200f479841"
+    },
+    {
       "date": "2026-10-14",
       "name": "two sum problem",
       "topic": "DSA practice",
@@ -148,12 +164,6 @@
       "name": "Implement next greater element function",
       "topic": "DSA practice",
       "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/c8ec92b8134f5f72eaccede1cea507af7896ff1d"
-    },
-    {
-      "date": "2026-08-14",
-      "name": "Implement binary search algorithm in binarysearch.py",
-      "topic": "DSA practice",
-      "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/0ead86699b68f0d01de1e8219ed38098b9e89faf"
     }
   ]
 }
