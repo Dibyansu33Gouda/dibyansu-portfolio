@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-23T08:31:05.554Z",
+  "updatedAt": "2026-10-24T08:06:11.606Z",
   "roadmap": "Striver's A2Z DSA Sheet",
   "profiles": {
     "leetcode": "https://leetcode.com/u/dibyansu_44/",
@@ -7,10 +7,30 @@
     "solutions": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib"
   },
   "solved": 14,
-  "currentStreak": 1,
+  "currentStreak": 2,
   "longestStreak": 2,
   "topics": [],
   "activity": [
+    {
+      "date": "2026-10-24",
+      "count": 1,
+      "problems": [
+        {
+          "name": "huffman code progess",
+          "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/f1cc0b51165ac2c21ce06694796f30f4feddb74d"
+        }
+      ]
+    },
+    {
+      "date": "2026-10-23",
+      "count": 1,
+      "problems": [
+        {
+          "name": "Add js_hindi folder inside repository",
+          "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/f37a52db2dc6bbe4f7b2300a9d49c68013d6fd95"
+        }
+      ]
+    },
     {
       "date": "2026-10-18",
       "count": 1,
@@ -130,6 +150,18 @@
   ],
   "recent": [
     {
+      "date": "2026-10-24",
+      "name": "huffman code progess",
+      "topic": "DSA practice",
+      "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/f1cc0b51165ac2c21ce06694796f30f4feddb74d"
+    },
+    {
+      "date": "2026-10-23",
+      "name": "Add js_hindi folder inside repository",
+      "topic": "DSA practice",
+      "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/f37a52db2dc6bbe4f7b2300a9d49c68013d6fd95"
+    },
+    {
       "date": "2026-10-18",
       "name": "next greater element using monotonic stack",
       "topic": "DSA practice",
@@ -152,18 +184,6 @@
       "name": "practiced fixed window problem",
       "topic": "DSA practice",
       "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/6ab520c66815e6c19c88e69030c7a4ff4bc59a17"
-    },
-    {
-      "date": "2026-08-17",
-      "name": "Add quicksort implementation in quicksort.py",
-      "topic": "DSA practice",
-      "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/64720148f13db9c1ce841384fe4dcaafc7e554fe"
-    },
-    {
-      "date": "2026-08-14",
-      "name": "Implement next greater element function",
-      "topic": "DSA practice",
-      "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/c8ec92b8134f5f72eaccede1cea507af7896ff1d"
     }
   ]
 }
