@@ -1,16 +1,30 @@
 {
-  "updatedAt": "2026-11-22T11:21:13.817Z",
+  "updatedAt": "2026-11-23T12:35:01.735Z",
   "roadmap": "Striver's A2Z DSA Sheet",
   "profiles": {
     "leetcode": "https://leetcode.com/u/dibyansu_44/",
     "takeUForward": "https://takeuforward.org/profile/dibyansu_44",
     "solutions": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib"
   },
-  "solved": 14,
-  "currentStreak": 2,
+  "solved": 16,
+  "currentStreak": 1,
   "longestStreak": 2,
   "topics": [],
   "activity": [
+    {
+      "date": "2026-11-22",
+      "count": 2,
+      "problems": [
+        {
+          "name": "Rabin krap string matching",
+          "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/7992fae3400170a343a3bf00b637ccca2c2acbe8"
+        },
+        {
+          "name": "kmp string matching algo",
+          "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/e1cb053730c5685b7f3fce3b6f2914c8d2225dfa"
+        }
+      ]
+    },
     {
       "date": "2026-10-24",
       "count": 1,
@@ -150,6 +164,18 @@
   ],
   "recent": [
     {
+      "date": "2026-11-22",
+      "name": "Rabin krap string matching",
+      "topic": "DSA practice",
+      "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/7992fae3400170a343a3bf00b637ccca2c2acbe8"
+    },
+    {
+      "date": "2026-11-22",
+      "name": "kmp string matching algo",
+      "topic": "DSA practice",
+      "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/e1cb053730c5685b7f3fce3b6f2914c8d2225dfa"
+    },
+    {
       "date": "2026-10-24",
       "name": "huffman code progess",
       "topic": "DSA practice",
@@ -172,18 +198,6 @@
       "name": "two sum problem",
       "topic": "DSA practice",
       "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/51dce6596b33572575eacc12cb12d6367b2d4b0c"
-    },
-    {
-      "date": "2026-10-14",
-      "name": "dynamic sliding window and longest substring",
-      "topic": "DSA practice",
-      "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/e292c9f31ea3bce416dce30481a4a41e61ebd8f9"
-    },
-    {
-      "date": "2026-10-11",
-      "name": "practiced fixed window problem",
-      "topic": "DSA practice",
-      "url": "https://github.com/Dibyansu33Gouda/DSA_practice_Dib/commit/6ab520c66815e6c19c88e69030c7a4ff4bc59a17"
     }
   ]
 }
